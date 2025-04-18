@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChaseCraft Live</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0e0e0e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #111;
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+      color: #00ffcc;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+
+    .left, .right {
+      padding: 1rem;
+      height: 100%;
+    }
+
+    .left {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .right {
+      flex: 1;
+      background-color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+    }
+
+    iframe, audio {
+      width: 100%;
+      border: none;
+    }
+
+    .section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #00ffcc;
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        flex-direction: column;
+      }
+      .right {
+        order: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>🎧 ChaseCraft Live Station</header>
+  <div class="content">
+    <div class="left">
+      <div class="section">
+        <span class="label">🎵 Now Playing (Music Stream):</span>
+        <audio controls autoplay>
+          <source src="https://9c6b-80-233-56-235.ngrok-free.app/stream" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      <div class="section">
+        <span class="label">📺 TikTok Live Stream:</span>
+        <iframe
+          src="https://www.tiktok.com/@whispers_from_within/live?enter_from_merge=share&enter_method=share_copy_link"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <div class="right">
+      <span class="label">💬 Live Chat (Discord):</span>
+      <iframe
+        src="https://discord.com/widget?id=1179828801139218473&theme=dark"
+        allowtransparency="true"
+        frameborder="0"
+        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+      </iframe>
+    </div>
+  </div>
+</body>
+</html>
