@@ -1,108 +1,511 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ChaseCraft Live</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #0e0e0e;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    header {
-      background-color: #111;
-      padding: 1rem;
-      text-align: center;
-      font-size: 2rem;
-      color: #00ffcc;
-    }
-
-    .content {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      overflow: hidden;
-    }
-
-    .left, .right {
-      padding: 1rem;
-      height: 100%;
-    }
-
-    .left {
-      flex: 2;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .right {
-      flex: 1;
-      background-color: #1a1a1a;
-      display: flex;
-      flex-direction: column;
-      justify-content: start;
-    }
-
-    iframe, audio {
-      width: 100%;
-      border: none;
-    }
-
-    .section {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .label {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: #00ffcc;
-    }
-
-    @media (max-width: 768px) {
-      .content {
-        flex-direction: column;
-      }
-      .right {
-        order: 2;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVibeHub - Play Your Cards Right!</title>
+    <meta name="description" content="Join GameVibeHub on Discord for Hearthstone streams, Magic: The Gathering battles, and epic community vibes! Catch us live on TikTok!">
+    <meta name="keywords" content="Discord, Hearthstone, Poker, World of Warcraft, Magic: The Gathering, gaming, streaming, TikTok">
+    <meta name="author" content="YourName">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Typed.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+            color: #e2e8f0;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            position: relative;
+            cursor: none;
+        }
+        /* Custom Cursor (Hearthstone Card) */
+        #custom-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            transition: transform 0.1s ease;
+        }
+        #custom-cursor svg {
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+        }
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 215, 0, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            animation: fadeTrail 0.5s ease-out forwards;
+        }
+        @keyframes fadeTrail {
+            to { opacity: 0; transform: scale(0); }
+        }
+        /* Neon Grid with Mana Crystal Glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(255, 215, 0, 0.2) 20px, rgba(255, 215, 0, 0.2) 22px),
+                        repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255, 215, 0, 0.2) 20px, rgba(255, 215, 0, 0.2) 22px);
+            opacity: 0.3;
+            animation: pulseGrid 10s linear infinite;
+            z-index: -1;
+        }
+        @keyframes pulseGrid {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+        /* Floating Sprite (Hearthstone Card) */
+        #sprite {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: floatDown 15s linear infinite, bob 2s ease-in-out infinite, sway 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes floatDown {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+        @keyframes bob {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -10px); }
+        }
+        @keyframes sway {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-60%, 0); }
+        }
+        #sprite svg {
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        /* Section reveal with glow */
+        section {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
+            position: relative;
+        }
+        section.visible {
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        /* Fade-in */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Button hover */
+        .btn {
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+        /* Hero section */
+        .hero-bg {
+            background: linear-gradient(180deg, #4b0082, #1a202c);
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+        /* Typed text */
+        .typed-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: #ffffff;
+            min-height: 2.5rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+        /* Card hover (flip effect) */
+        .feature-card, .membership-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            perspective: 1000px;
+        }
+        .feature-card:hover, .membership-card:hover {
+            transform: rotateY(10deg) translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5);
+        }
+        /* Easter egg */
+        .rainbow-border {
+            animation: rainbow 2s linear infinite;
+        }
+        @keyframes rainbow {
+            0% { border-color: #ff0000; }
+            16% { border-color: #ff9900; }
+            33% { border-color: #33cc33; }
+            50% { border-color: #00ccff; }
+            66% { border-color: #6600cc; }
+            83% { border-color: #ff3399; }
+            100% { border-color: #ff0000; }
+        }
+        /* Spin wheel button */
+        #spin-wheel {
+            animation: spinGlow 2s ease-in-out infinite;
+        }
+        @keyframes spinGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
+        }
+    </style>
 </head>
 <body>
-  <header>🎧 ChaseCraft Live Station</header>
-  <div class="content">
-    <div class="left">
-      <div class="section">
-        <span class="label">🎵 Now Playing (Music Stream):</span>
-        <audio controls autoplay>
-  <source src="https://9c6b-80-233-56-235.ngrok-free.app/stream" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-      </div>
-      <div class="section">
-        <span class="label">📺 TikTok Live Stream:</span>
-        <iframe
-          src="https://www.tiktok.com/@whispers_from_within/live?enter_from_merge=share&enter_method=share_copy_link"
-          allowfullscreen>
-        </iframe>
-      </div>
+    <!-- Custom Cursor (Hearthstone Card) -->
+    <div id="custom-cursor">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="4" y="4" width="12" height="12" fill="#ffd700" />
+            <rect x="6" y="6" width="8" height="8" fill="#ffffff" />
+            <rect x="8" y="8" width="2" height="2" fill="#ffd700" />
+        </svg>
     </div>
-    <div class="right">
-      <span class="label">💬 Live Chat (Discord):</span>
-      <iframe src="https://discord.com/widget?id=241248537231228928&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+
+    <!-- Floating Sprite (Hearthstone Card) -->
+    <div id="sprite">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="8" y="8" width="24" height="24" fill="#ffd700" />
+            <rect x="12" y="12" width="16" height="16" fill="#ffffff" />
+            <rect x="16" y="16" width="4" height="4" fill="#ffd700" />
+            <rect x="24" y="16" width="4" height="4" fill="#ffd700" />
+        </svg>
     </div>
-  </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-bg flex items-center justify-center text-center">
+        <div class="bg-black bg-opacity-50 p-10 rounded-lg fade-in">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4">GameVibeHub</h1>
+            <div id="typed-text" class="typed-text mb-6"></div>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg">Play Your Cards Right!</a>
+        </div>
+    </section>
+
+    <!-- Mini Game Section (Hearthstone Card Clicker) -->
+    <section id="mini-game" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Hearthstone Card Clicker</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Click to play epic cards! How many can you slam?</p>
+            <div class="bg-gray-800 p-6 rounded-lg fade-in">
+                <div id="game-target" class="w-16 h-16 bg-yellow-500 rounded-lg mx-auto cursor-pointer transition-transform duration-200 hover:scale-110"></div>
+                <p class="text-2xl font-semibold text-white mt-4">Cards Played: <span id="game-score">0</span></p>
+                <p class="text-gray-400 mt-2">Mana up, it’s time to duel!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Why Join GameVibeHub?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
+                    <i class="fas fa-gamepad text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Epic Gaming Streams</h3>
+                    <p class="text-gray-300">Slam *Hearthstone* cards, cast *WoW* spells, or snipe in *CoD*. Catch us live on TikTok!</p>
+                </div>
+                <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
+                    <i class="fas fa-music text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Music & Card Vibes</h3>
+                    <p class="text-gray-300">Discuss *Magic: The Gathering* combos or remix beats. Mana up for music chats!</p>
+                </div>
+                <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
+                    <i class="fas fa-users text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Community Battles</h3>
+                    <p class="text-gray-300">Join *Poker* nights, *Scrabble* showdowns, or *Warframe* raids. Share your fave builds!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Playlist Teaser Section -->
+    <section id="playlist" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">GameVibe Playlist</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Our community’s top tracks, inspired by your fave games!</p>
+            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <ul class="text-left text-gray-300">
+                    <li class="mb-2">🎵 "Hearthstone Heroics" - Mana Mix</li>
+                    <li class="mb-2">🎵 "WoW Wanderer" - Azeroth Anthem</li>
+                    <li class="mb-2">🎵 "Magic Mana" - Spellbound Remix</li>
+                    <li class="mb-2">🎵 "Diablo’s Doom" - Hellfire Lo-Fi</li>
+                </ul>
+                <p class="text-gray-400 mt-4">Join to remix your own track!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Share Your Vibe Section -->
+    <section id="share" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Share Your GameVibe</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">What’s your fave game or hobby? Tweet it or join our Discord to chat!</p>
+            <div class="bg-gray-800 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <p class="text-gray-300 mb-4">🎮 Love *Hearthstone*? Share your best deck!</p>
+                <p class="text-gray-300 mb-4">🃏 *Poker* pro? Spill your bluffing tips!</p>
+                <p class="text-gray-300 mb-4">⚔️ *Warframe* Tenno? Show off your builds!</p>
+                <a href="https://twitter.com/intent/tweet?text=My fave game is [Your Game]! Join me at GameVibeHub to vibe and play! https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg mb-4">Tweet Your Vibe</a>
+                <p class="text-gray-400">Or hop into Discord to spill the tea!</p>
+            </div>
+            <h3 class="text-2xl font-bold mt-12 mb-6 fade-in">Mock Poll: Fave Game?</h3>
+            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <ul class="text-left text-gray-300">
+                    <li class="mb-2">🔥 Hearthstone</li>
+                    <li class="mb-2">🃏 Magic: The Gathering</li>
+                    <li class="mb-2">⚔️ World of Warcraft</li>
+                    <li class="mb-2">🎯 Call of Duty</li>
+                    <li class="mb-2">📜 Other (Join Discord to vote!)</li>
+                </ul>
+                <p class="text-gray-400 mt-4">Join our server to cast your real vote!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section id="membership" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Unlock Legendary Perks</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-gray-900 rounded-lg membership-card fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">Free Adventurer</h3>
+                    <p class="text-3xl font-bold text-yellow-500 mb-4">$0</p>
+                    <ul class="text-gray-300 mb-6">
+                        <li>#general chat access</li>
+                        <li>Join *Hearthstone* streams</li>
+                        <li>Basic events (*Scrabble* nights)</li>
+                    </ul>
+                    <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Join Free</a>
+                </div>
+                <div class="p-6 bg-gray-900 rounded-lg border-2 border-yellow-500 membership-card fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">Mana Master</h3>
+                    <p class="text-3xl font-bold text-yellow-500 mb-4">$5/month</p>
+                    <ul class="text-gray-300 mb-6">
+                        <li>Exclusive #mana-lobby</li>
+                        <li>Premium *WoW* stream access</li>
+                        <li>Epic role & badge</li>
+                    </ul>
+                    <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Go Master</a>
+                </div>
+                <div class="p-6 bg-gray-900 rounded-lg membership-card fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">Legendary Hero</h3>
+                    <p class="text-3xl font-bold text-yellow-500 mb-4">$10/month</p>
+                    <ul class="text-gray-300 mb-6">
+                        <li>Private *Magic* Q&As</li>
+                        <li>Custom emojis</li>
+                        <li>Legendary role & shoutouts</li>
+                    </ul>
+                    <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Become Legend</a>
+                </div>
+            </div>
+            <p class="mt-8 text-gray-400 fade-in">Toss a gold coin to your streamer!</p>
+            <a href="https://www.paypal.me/YOUR_PAYPAL" target="_blank" class="btn inline-block bg-green-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">Donate Now</a>
+        </div>
+    </section>
+
+    <!-- Spin the Wheel Section -->
+    <section id="spin" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Spin the Mana Wheel</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Get a random game vibe or event idea!</p>
+            <button id="spin-wheel" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg">Spin It!</button>
+            <p id="wheel-result" class="text-2xl text-white mt-4 fade-in"></p>
+        </div>
+    </section>
+
+    <!-- Discord Widget Section -->
+    <section id="community" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Join the Mana Pool</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">See who’s online and cast your spells!</p>
+            <iframe src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" class="mx-auto fade-in"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-800 text-center">
+        <div class="container mx-auto px-4">
+            <p class="text-gray-400 mb-4 fade-in">© 2025 GameVibeHub. All rights reserved.</p>
+            <p class="text-gray-400 mb-4 fade-in">Powered by mana crystals and epic decks!</p>
+            <div class="flex justify-center space-x-6">
+                <a href="https://twitter.com/YOUR_TWITTER" target="_blank" class="text-gray-300 hover:text-yellow-500 fade-in">
+                    <i class="fab fa-twitter text-2xl"></i>
+                </a>
+                <a href="https://www.tiktok.com/@YOUR_TIKTOK" target="_blank" class="text-gray-300 hover:text-yellow-500 fade-in">
+                    <i class="fab fa-tiktok text-2xl"></i>
+                </a>
+                <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="text-gray-300 hover:text-yellow-500 fade-in">
+                    <i class="fab fa-discord text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Custom Cursor and Trail
+        const cursor = document.getElementById('custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.style.left = `${e.clientX - 4}px`;
+            trail.style.top = `${e.clientY - 4}px`;
+            document.body.appendChild(trail);
+            setTimeout(() => trail.remove(), 500);
+        });
+
+        // Typing Effect
+        let typed;
+        function startTyping() {
+            typed = new Typed('#typed-text', {
+                strings: [
+                    'Welcome to GameVibeHub!',
+                    'Slam epic *Hearthstone* cards live on TikTok!',
+                    'Cast spells in *Magic: The Gathering*!',
+                    'Quest in *World of Warcraft* with us!',
+                    'Go all-in with *Poker* nights!',
+                    'Share your fave *Warframe* builds!',
+                    'Slay demons in *Diablo*!',
+                    'Play your cards right in *Scrabble*!',
+                    'Join our *CoD* squad for headshots!',
+                    'What’s your fave game? Tweet it!'
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                backDelay: 1000,
+                loop: true,
+                showCursor: true,
+                cursorChar: '█'
+            });
+        }
+
+        // Sprite Animation and Interactions
+        const sprite = document.getElementById('sprite');
+        let hasTriggeredTyping = false;
+
+        function checkSpritePosition() {
+            const spriteRect = sprite.getBoundingClientRect();
+            const spriteY = spriteRect.top + window.scrollY;
+
+            // Trigger typing
+            const heroSection = document.getElementById('hero');
+            const heroRect = heroSection.getBoundingClientRect();
+            if (!hasTriggeredTyping && spriteY > heroRect.top + window.scrollY) {
+                startTyping();
+                hasTriggeredTyping = true;
+            }
+
+            // Reveal sections
+            document.querySelectorAll('section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (spriteY > rect.top + window.scrollY) {
+                    section.classList.add('visible');
+                }
+            });
+
+            // Reset sprite
+            if (spriteY > document.body.scrollHeight) {
+                sprite.style.top = '-100px';
+            }
+
+            // Cursor proximity
+            const cursorRect = cursor.getBoundingClientRect();
+            const dx = spriteRect.left - cursorRect.left;
+            const dy = spriteRect.top - cursorRect.top;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 100) {
+                sprite.style.animation = 'floatDown 15s linear infinite, bob 1s ease-in-out infinite, sway 4s ease-in-out infinite';
+            } else {
+                sprite.style.animation = 'floatDown 15s linear infinite, bob 2s ease-in-out infinite, sway 4s ease-in-out infinite';
+            }
+        }
+
+        function animate() {
+            checkSpritePosition();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Mini Game (Hearthstone Card Clicker)
+        const gameTarget = document.getElementById('game-target');
+        const gameScore = document.getElementById('game-score');
+        let score = 0;
+        gameTarget.addEventListener('click', () => {
+            score++;
+            gameScore.textContent = score;
+            gameTarget.style.transform = 'scale(1.2)';
+            setTimeout(() => gameTarget.style.transform = 'scale(1)', 100);
+        });
+
+        // Spin the Wheel
+        const wheelButton = document.getElementById('spin-wheel');
+        const wheelResult = document.getElementById('wheel-result');
+        const wheelOptions = [
+            '“Slam a *Hearthstone* combo!”',
+            '“Go all-in at our *Poker* night!”',
+            '“Cast epic *Magic: The Gathering* spells!”',
+            '“Quest in *World of Warcraft*!”',
+            '“Share your *Warframe* Tenno build!”',
+            '“Slay in *Diablo* with the squad!”',
+            '“Drop a *CoD* headshot!”',
+            '“Spell victory in *Scrabble*!”',
+            '“Tweet your fave game vibe!”'
+        ];
+        wheelButton.addEventListener('click', () => {
+            const randomOption = wheelOptions[Math.floor(Math.random() * wheelOptions.length)];
+            wheelResult.textContent = randomOption;
+            wheelResult.style.opacity = '0';
+            setTimeout(() => wheelResult.style.opacity = '1', 100);
+        });
+
+        // Konami Code Easter Egg
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    document.querySelectorAll('section').forEach(section => {
+                        section.classList.add('rainbow-border');
+                        section.style.border = '4px solid';
+                    });
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // Fade-in animations
+        const fadeIns = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeIns.forEach(element => observer.observe(element));
+    </script>
 </body>
 </html>
