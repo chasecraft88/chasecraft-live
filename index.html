@@ -463,12 +463,11 @@
             </div>
             <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Show Discord Server</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
-                <!-- Discord Widget: Replace YOUR_DISCORD_SERVER_ID with your server ID from Server Settings > Widget.
-                     To enable: Go to Discord Server Settings > Widget, enable "Enable Server Widget", select an Invite Channel, and copy the Server ID.
+                <!-- Discord Widget: Ensure widget is enabled in Server Settings > Widget with an Invite Channel set.
                      The widget will show server name, online members, and a "Connect" button if configured correctly. -->
-                <iframe id="discord-iframe" src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';document.getElementById('discord-widget').classList.add('hidden');"></iframe>
+                <iframe id="discord-iframe" src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';document.getElementById('discord-widget').classList.add('hidden');"></iframe>
             </div>
-            <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure server ID is valid, widget is enabled, and an invite channel is set in Discord settings.</p>
+            <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure widget is enabled and an invite channel is set in Discord settings.</p>
             <p class="text-gray-300 mt-6 fade-in">© 2025 GameVibeHub. Crafted with 💛 for gamers worldwide.</p>
         </div>
     </footer>
@@ -806,7 +805,7 @@
 
         async function generateMemeCaption(text, retryCount = 0) {
             const now = Date.now();
-            if (now - LastRequestTime < COOLDOWN_MS) {
+            if (now - lastRequestTime < COOLDOWN_MS) {
                 memeError.textContent = 'Slow down! Wait a moment before generating another meme.';
                 memeError.classList.remove('hidden');
                 return text;
