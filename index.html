@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVibeHub - Play Your Cards Right!</title>
-    <meta name="description" content="Join GameVibeHub on Discord for Hearthstone streams, Magic: The Gathering battles, and epic community vibes! Catch us live on TikTok!">
-    <meta name="keywords" content="Discord, Hearthstone, Poker, World of Warcraft, Magic: The Gathering, gaming, streaming, TikTok">
+    <title>GameVibeHub - The Ultimate Gaming Hub!</title>
+    <meta name="description" content="Join GameVibeHub for Hearthstone streams, global gaming challenges, and epic community vibes! Catch daily TikTok streams and share your Gamer Card! #GameVibeHub">
+    <meta name="keywords" content="Discord, Hearthstone, Magic: The Gathering, World of Warcraft, gaming, streaming, TikTok, community">
     <meta name="author" content="YourName">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,7 +25,7 @@
             position: relative;
             cursor: none;
         }
-        /* Custom Cursor (Hearthstone Card) */
+        /* Custom Cursor */
         #custom-cursor {
             position: fixed;
             pointer-events: none;
@@ -48,7 +48,7 @@
         @keyframes fadeTrail {
             to { opacity: 0; transform: scale(0); }
         }
-        /* Neon Grid with Mana Crystal Glow */
+        /* Neon Grid with Mana Glow */
         body::before {
             content: '';
             position: fixed;
@@ -66,7 +66,7 @@
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.5; }
         }
-        /* Floating Sprite (Hearthstone Card) */
+        /* Floating Sprite */
         #sprite {
             position: fixed;
             left: 50%;
@@ -95,7 +95,20 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
-        /* Section reveal with glow */
+        /* Mana Explosion */
+        .mana-explosion {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.8), transparent);
+            border-radius: 50%;
+            animation: explode 0.5s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes explode {
+            to { transform: scale(2); opacity: 0; }
+        }
+        /* Section reveal */
         section {
             opacity: 0;
             transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
@@ -139,7 +152,7 @@
             min-height: 2.5rem;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
         }
-        /* Card hover (flip effect) */
+        /* Card hover */
         .feature-card, .membership-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             perspective: 1000px;
@@ -161,7 +174,7 @@
             83% { border-color: #ff3399; }
             100% { border-color: #ff0000; }
         }
-        /* Spin wheel button */
+        /* Spin wheel */
         #spin-wheel {
             animation: spinGlow 2s ease-in-out infinite;
         }
@@ -169,10 +182,28 @@
             0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
             50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
         }
+        /* Meme generator */
+        #meme-canvas {
+            position: relative;
+            width: 300px;
+            height: 200px;
+        }
+        #meme-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: #ffffff;
+            text-shadow: 2px 2px #000000;
+            text-align: center;
+            width: 90%;
+        }
     </style>
 </head>
 <body>
-    <!-- Custom Cursor (Hearthstone Card) -->
+    <!-- Custom Cursor -->
     <div id="custom-cursor">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <rect x="4" y="4" width="12" height="12" fill="#ffd700" />
@@ -181,7 +212,7 @@
         </svg>
     </div>
 
-    <!-- Floating Sprite (Hearthstone Card) -->
+    <!-- Floating Sprite -->
     <div id="sprite">
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
             <rect x="8" y="8" width="24" height="24" fill="#ffd700" />
@@ -196,19 +227,93 @@
         <div class="bg-black bg-opacity-50 p-10 rounded-lg fade-in">
             <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4">GameVibeHub</h1>
             <div id="typed-text" class="typed-text mb-6"></div>
-            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg">Play Your Cards Right!</a>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg">Join the Global Vibe!</a>
+            <p class="text-gray-300 mt-4">Next TikTok Stream: <span id="stream-countdown">Loading...</span></p>
         </div>
     </section>
 
-    <!-- Mini Game Section (Hearthstone Card Clicker) -->
+    <!-- Daily Challenge Section -->
+    <section id="daily-challenge" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Daily Gaming Challenge</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Take on today’s quest and share on #GameVibeHub!</p>
+            <div class="bg-gray-800 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <p id="daily-challenge-text" class="text-2xl text-white mb-4"></p>
+                <a href="https://twitter.com/intent/tweet?text=I’m tackling today’s GameVibeHub challenge: [Challenge]! Join me! https://discord.gg/YOUR_INVITE_LINK #GameVibeHub" target="_blank" class="btn inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg">Share on Twitter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini Game Section -->
     <section id="mini-game" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-12 fade-in">Hearthstone Card Clicker</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Click to play epic cards! How many can you slam?</p>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Play cards to climb the global leaderboard!</p>
             <div class="bg-gray-800 p-6 rounded-lg fade-in">
                 <div id="game-target" class="w-16 h-16 bg-yellow-500 rounded-lg mx-auto cursor-pointer transition-transform duration-200 hover:scale-110"></div>
                 <p class="text-2xl font-semibold text-white mt-4">Cards Played: <span id="game-score">0</span></p>
-                <p class="text-gray-400 mt-2">Mana up, it’s time to duel!</p>
+                <p class="text-gray-400 mt-2">Mana Level: <span id="mana-level">Novice</span></p>
+                <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">Claim Your Leaderboard Spot</a>
+            </div>
+            <h3 class="text-2xl font-bold mt-12 mb-6 fade-in">Global Leaderboard</h3>
+            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <ul class="text-left text-gray-300">
+                    <li class="mb-2">🥇 ManaMaster - 10,000 Cards</li>
+                    <li class="mb-2">🥈 DeckSlinger - 8,000 Cards</li>
+                    <li class="mb-2">🥉 VibeKnight - 5,000 Cards</li>
+                </ul>
+                <p class="text-gray-400 mt-4">Join Discord to top the board!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gamer Card Section -->
+    <section id="gamer-card" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Create Your Gamer Card</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Show the world your gaming vibe!</p>
+            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <select id="game-select" class="bg-gray-800 text-white p-2 rounded mb-4 w-full">
+                    <option>Hearthstone</option>
+                    <option>Magic: The Gathering</option>
+                    <option>World of Warcraft</option>
+                    <option>Poker</option>
+                    <option>Warframe</option>
+                    <option>Call of Duty</option>
+                    <option>Diablo</option>
+                    <option>Scrabble</option>
+                    <option>Fortnite</option>
+                    <option>Minecraft</option>
+                </select>
+                <select id="vibe-select" class="bg-gray-800 text-white p-2 rounded mb-4 w-full">
+                    <option>Strategist</option>
+                    <option>Legend</option>
+                    <option>Slayer</option>
+                    <option>Builder</option>
+                    <option>Champion</option>
+                </select>
+                <p id="gamer-card-text" class="text-2xl text-white mb-4"></p>
+                <a id="share-gamer-card" href="#" target="_blank" class="btn inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg">Share Your Card</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meme Generator Section -->
+    <section id="meme" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Game Meme Generator</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Create a meme and go viral with #GameVibeHub!</p>
+            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
+                <input id="meme-input" type="text" placeholder="Enter your meme text..." class="bg-gray-800 text-white p-2 rounded mb-4 w-full">
+                <div id="meme-canvas" class="mx-auto">
+                    <svg width="300" height="200" viewBox="0 0 300 200" fill="none">
+                        <rect width="300" height="200" fill="#ffd700" />
+                        <rect x="10" y="10" width="280" height="180" fill="#ffffff" />
+                        <rect x="120" y="80" width="60" height="40" fill="#ffd700" />
+                    </svg>
+                    <div id="meme-text"></div>
+                </div>
+                <button id="download-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">Download Meme</button>
             </div>
         </div>
     </section>
@@ -216,22 +321,22 @@
     <!-- Features Section -->
     <section id="features" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Why Join GameVibeHub?</h2>
+            <h2 class="text-4xl font-bold mb-12 fade-in">Why GameVibeHub Rules</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
                     <i class="fas fa-gamepad text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-semibold mb-2">Epic Gaming Streams</h3>
-                    <p class="text-gray-300">Slam *Hearthstone* cards, cast *WoW* spells, or snipe in *CoD*. Catch us live on TikTok!</p>
+                    <h3 class="text-2xl font-semibold mb-2">Global Streams</h3>
+                    <p class="text-gray-300">Watch *Hearthstone* duels or *CoD* battles live on TikTok. Join the hype!</p>
                 </div>
                 <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
                     <i class="fas fa-music text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-semibold mb-2">Music & Card Vibes</h3>
-                    <p class="text-gray-300">Discuss *Magic: The Gathering* combos or remix beats. Mana up for music chats!</p>
+                    <h3 class="text-2xl font-semibold mb-2">Vibe Remixes</h3>
+                    <p class="text-gray-300">Chat *Magic* combos or remix beats. Mana up for global music vibes!</p>
                 </div>
                 <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
                     <i class="fas fa-users text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-semibold mb-2">Community Battles</h3>
-                    <p class="text-gray-300">Join *Poker* nights, *Scrabble* showdowns, or *Warframe* raids. Share your fave builds!</p>
+                    <h3 class="text-2xl font-semibold mb-2">Worldwide Events</h3>
+                    <p class="text-gray-300">Join *Poker* nights, *Warframe* raids, or *Minecraft* builds. Unite gamers!</p>
                 </div>
             </div>
         </div>
@@ -241,16 +346,58 @@
     <section id="playlist" class="py-20 bg-gray-800">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-12 fade-in">GameVibe Playlist</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Our community’s top tracks, inspired by your fave games!</p>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Global tracks inspired by epic games!</p>
             <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
                 <ul class="text-left text-gray-300">
                     <li class="mb-2">🎵 "Hearthstone Heroics" - Mana Mix</li>
-                    <li class="mb-2">🎵 "WoW Wanderer" - Azeroth Anthem</li>
+                    <li class="mb-2">🎵 "Fortnite Frenzy" - Victory Royale Vibe</li>
                     <li class="mb-2">🎵 "Magic Mana" - Spellbound Remix</li>
                     <li class="mb-2">🎵 "Diablo’s Doom" - Hellfire Lo-Fi</li>
                 </ul>
-                <p class="text-gray-400 mt-4">Join to remix your own track!</p>
+                <p class="text-gray-400 mt-4">Suggest your track on Discord!</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Community Spotlight Section -->
+    <section id="spotlight" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Community Spotlight</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">See what our global gamers are up to!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-6 bg-gray-800 rounded-lg fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">PlayerX’s Warframe Build</h3>
+                    <p class="text-gray-300">“My Volt Prime shocks the Grineer!”</p>
+                </div>
+                <div class="p-6 bg-gray-800 rounded-lg fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">MageY’s Magic Deck</h3>
+                    <p class="text-gray-300">“Blue-Black control FTW!”</p>
+                </div>
+            </div>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-6">Submit Your Spotlight</a>
+        </div>
+    </section>
+
+    <!-- Event Calendar Section -->
+    <section id="events" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Weekly Event Calendar</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Join global gaming showdowns!</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-gray-900 rounded-lg fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">Monday: Hearthstone Duel</h3>
+                    <p class="text-gray-300">Craft your deck and battle!</p>
+                </div>
+                <div class="p-6 bg-gray-900 rounded-lg fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">Wednesday: Poker Night</h3>
+                    <p class="text-gray-300">Bluff your way to victory!</p>
+                </div>
+                <div class="p-6 bg-gray-900 rounded-lg fade-in">
+                    <h3 class="text-2xl font-semibold mb-2">Friday: Warframe Raid</h3>
+                    <p class="text-gray-300">Team up for epic loot!</p>
+                </div>
+            </div>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-6">Join Events</a>
         </div>
     </section>
 
@@ -258,24 +405,24 @@
     <section id="share" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-12 fade-in">Share Your GameVibe</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">What’s your fave game or hobby? Tweet it or join our Discord to chat!</p>
+            <p class="text-xl text-gray-300 mb-6 fade-in">What’s your gaming passion? Share and go viral!</p>
             <div class="bg-gray-800 p-6 rounded-lg max-w-md mx-auto fade-in">
-                <p class="text-gray-300 mb-4">🎮 Love *Hearthstone*? Share your best deck!</p>
-                <p class="text-gray-300 mb-4">🃏 *Poker* pro? Spill your bluffing tips!</p>
-                <p class="text-gray-300 mb-4">⚔️ *Warframe* Tenno? Show off your builds!</p>
-                <a href="https://twitter.com/intent/tweet?text=My fave game is [Your Game]! Join me at GameVibeHub to vibe and play! https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg mb-4">Tweet Your Vibe</a>
-                <p class="text-gray-400">Or hop into Discord to spill the tea!</p>
+                <p class="text-gray-300 mb-4">🎮 *Hearthstone* deck master? Show it off!</p>
+                <p class="text-gray-300 mb-4">⚔️ *WoW* raider? Share your epic loot!</p>
+                <p class="text-gray-300 mb-4">🖌️ Create *Diablo* fan art for #GameVibeHub!</p>
+                <a href="https://twitter.com/intent/tweet?text=My gaming vibe is [Your Vibe]! Join GameVibeHub to play and connect! https://discord.gg/YOUR_INVITE_LINK #GameVibeHub" target="_blank" class="btn inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg mb-4">Tweet Your Vibe</a>
+                <p class="text-gray-400">Join Discord to connect with gamers worldwide!</p>
             </div>
             <h3 class="text-2xl font-bold mt-12 mb-6 fade-in">Mock Poll: Fave Game?</h3>
             <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
                 <ul class="text-left text-gray-300">
                     <li class="mb-2">🔥 Hearthstone</li>
                     <li class="mb-2">🃏 Magic: The Gathering</li>
-                    <li class="mb-2">⚔️ World of Warcraft</li>
-                    <li class="mb-2">🎯 Call of Duty</li>
+                    <li class="mb-2">⚔️ Fortnite</li>
+                    <li class="mb-2">⛏️ Minecraft</li>
                     <li class="mb-2">📜 Other (Join Discord to vote!)</li>
                 </ul>
-                <p class="text-gray-400 mt-4">Join our server to cast your real vote!</p>
+                <p class="text-gray-400 mt-4">Cast your vote on our server!</p>
             </div>
         </div>
     </section>
@@ -283,13 +430,13 @@
     <!-- Membership Section -->
     <section id="membership" class="py-20 bg-gray-800">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Unlock Legendary Perks</h2>
+            <h2 class="text-4xl font-bold mb-12 fade-in">Unlock Global Perks</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="p-6 bg-gray-900 rounded-lg membership-card fade-in">
-                    <h3 class="text-2xl font-semibold mb-2">Free Adventurer</h3>
+                    <h3 class="text-2xl font-semibold mb-2">Free Gamer</h3>
                     <p class="text-3xl font-bold text-yellow-500 mb-4">$0</p>
                     <ul class="text-gray-300 mb-6">
-                        <li>#general chat access</li>
+                        <li>#global-chat access</li>
                         <li>Join *Hearthstone* streams</li>
                         <li>Basic events (*Scrabble* nights)</li>
                     </ul>
@@ -300,13 +447,13 @@
                     <p class="text-3xl font-bold text-yellow-500 mb-4">$5/month</p>
                     <ul class="text-gray-300 mb-6">
                         <li>Exclusive #mana-lobby</li>
-                        <li>Premium *WoW* stream access</li>
+                        <li>Premium *WoW* streams</li>
                         <li>Epic role & badge</li>
                     </ul>
                     <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Go Master</a>
                 </div>
                 <div class="p-6 bg-gray-900 rounded-lg membership-card fade-in">
-                    <h3 class="text-2xl font-semibold mb-2">Legendary Hero</h3>
+                    <h3 class="text-2xl font-semibold mb-2">Global Legend</h3>
                     <p class="text-3xl font-bold text-yellow-500 mb-4">$10/month</p>
                     <ul class="text-gray-300 mb-6">
                         <li>Private *Magic* Q&As</li>
@@ -316,7 +463,7 @@
                     <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Become Legend</a>
                 </div>
             </div>
-            <p class="mt-8 text-gray-400 fade-in">Toss a gold coin to your streamer!</p>
+            <p class="mt-8 text-gray-400 fade-in">Support the global hub!</p>
             <a href="https://www.paypal.me/YOUR_PAYPAL" target="_blank" class="btn inline-block bg-green-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">Donate Now</a>
         </div>
     </section>
@@ -324,8 +471,8 @@
     <!-- Spin the Wheel Section -->
     <section id="spin" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Spin the Mana Wheel</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Get a random game vibe or event idea!</p>
+            <h2 class="text-4xl font-bold mb-12 fade-in">Spin the Global Wheel</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Get a random vibe or challenge!</p>
             <button id="spin-wheel" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg">Spin It!</button>
             <p id="wheel-result" class="text-2xl text-white mt-4 fade-in"></p>
         </div>
@@ -334,8 +481,8 @@
     <!-- Discord Widget Section -->
     <section id="community" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Join the Mana Pool</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">See who’s online and cast your spells!</p>
+            <h2 class="text-4xl font-bold mb-12 fade-in">Join the Global Hub</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Connect with gamers worldwide!</p>
             <iframe src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" class="mx-auto fade-in"></iframe>
         </div>
     </section>
@@ -344,7 +491,7 @@
     <footer class="py-10 bg-gray-800 text-center">
         <div class="container mx-auto px-4">
             <p class="text-gray-400 mb-4 fade-in">© 2025 GameVibeHub. All rights reserved.</p>
-            <p class="text-gray-400 mb-4 fade-in">Powered by mana crystals and epic decks!</p>
+            <p class="text-gray-400 mb-4 fade-in">Powered by mana crystals and global vibes!</p>
             <div class="flex justify-center space-x-6">
                 <a href="https://twitter.com/YOUR_TWITTER" target="_blank" class="text-gray-300 hover:text-yellow-500 fade-in">
                     <i class="fab fa-twitter text-2xl"></i>
@@ -359,9 +506,9 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Interactivity -->
+    <!-- JavaScript -->
     <script>
-        // Custom Cursor and Trail
+        // Custom Cursor
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = `${e.clientX}px`;
@@ -380,15 +527,15 @@
             typed = new Typed('#typed-text', {
                 strings: [
                     'Welcome to GameVibeHub!',
-                    'Slam epic *Hearthstone* cards live on TikTok!',
+                    'Slam *Hearthstone* cards live on TikTok!',
                     'Cast spells in *Magic: The Gathering*!',
-                    'Quest in *World of Warcraft* with us!',
-                    'Go all-in with *Poker* nights!',
-                    'Share your fave *Warframe* builds!',
-                    'Slay demons in *Diablo*!',
-                    'Play your cards right in *Scrabble*!',
-                    'Join our *CoD* squad for headshots!',
-                    'What’s your fave game? Tweet it!'
+                    'Raid in *World of Warcraft*!',
+                    'Build epic *Minecraft* creations!',
+                    'Drop *Fortnite* dubs with us!',
+                    'Share your *Warframe* builds!',
+                    'Create a meme and go viral!',
+                    'Join daily global challenges!',
+                    'What’s your vibe? Share it!'
                 ],
                 typeSpeed: 50,
                 backSpeed: 30,
@@ -399,7 +546,7 @@
             });
         }
 
-        // Sprite Animation and Interactions
+        // Sprite Animation
         const sprite = document.getElementById('sprite');
         let hasTriggeredTyping = false;
 
@@ -407,15 +554,11 @@
             const spriteRect = sprite.getBoundingClientRect();
             const spriteY = spriteRect.top + window.scrollY;
 
-            // Trigger typing
-            const heroSection = document.getElementById('hero');
-            const heroRect = heroSection.getBoundingClientRect();
-            if (!hasTriggeredTyping && spriteY > heroRect.top + window.scrollY) {
+            if (!hasTriggeredTyping && spriteY > document.getElementById('hero').getBoundingClientRect().top + window.scrollY) {
                 startTyping();
                 hasTriggeredTyping = true;
             }
 
-            // Reveal sections
             document.querySelectorAll('section').forEach(section => {
                 const rect = section.getBoundingClientRect();
                 if (spriteY > rect.top + window.scrollY) {
@@ -423,12 +566,10 @@
                 }
             });
 
-            // Reset sprite
             if (spriteY > document.body.scrollHeight) {
                 sprite.style.top = '-100px';
             }
 
-            // Cursor proximity
             const cursorRect = cursor.getBoundingClientRect();
             const dx = spriteRect.left - cursorRect.left;
             const dy = spriteRect.top - cursorRect.top;
@@ -446,39 +587,141 @@
         }
         animate();
 
-        // Mini Game (Hearthstone Card Clicker)
+        // TikTok Stream Countdown (Example: Daily at 8 PM EST)
+        const countdownElement = document.getElementById('stream-countdown');
+        function updateCountdown() {
+            const now = new Date();
+            const nextStream = new Date();
+            nextStream.setHours(20, 0, 0, 0); // 8 PM EST
+            if (now.getHours() >= 20) {
+                nextStream.setDate(now.getDate() + 1);
+            }
+            const timeLeft = nextStream - now;
+            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            countdownElement.textContent = `${hours}h ${minutes}m`;
+        }
+        setInterval(updateCountdown, 60000);
+        updateCountdown();
+
+        // Daily Challenge
+        const challengeText = document.getElementById('daily-challenge-text');
+        const challenges = [
+            'Build a *Hearthstone* deck with only 3 mana cards!',
+            'Share a *Magic: The Gathering* combo on Discord!',
+            'Drop a *Fortnite* Victory Royale clip on TikTok!',
+            'Craft a *Minecraft* monument in 1 hour!',
+            'Show your *Warframe* build with #GameVibeHub!',
+            'Bluff your way to victory in *Poker*!',
+            'Slay a *Diablo* boss and share the loot!'
+        ];
+        const today = new Date().getDay();
+        challengeText.textContent = challenges[today];
+        document.querySelector('#daily-challenge a').href = `https://twitter.com/intent/tweet?text=I’m tackling today’s GameVibeHub challenge: ${challenges[today]}! Join me! https://discord.gg/YOUR_INVITE_LINK #GameVibeHub`;
+
+        // Mini Game
         const gameTarget = document.getElementById('game-target');
         const gameScore = document.getElementById('game-score');
+        const manaLevel = document.getElementById('mana-level');
         let score = 0;
-        gameTarget.addEventListener('click', () => {
+        const levels = [
+            { threshold: 0, name: 'Novice' },
+            { threshold: 10, name: 'Apprentice' },
+            { threshold: 20, name: 'Master' },
+            { threshold: 50, name: 'Legend' }
+        ];
+        gameTarget.addEventListener('click', (e) => {
             score++;
             gameScore.textContent = score;
+            const level = levels.find(l => score >= l.threshold) || levels[0];
+            manaLevel.textContent = level.name;
             gameTarget.style.transform = 'scale(1.2)';
             setTimeout(() => gameTarget.style.transform = 'scale(1)', 100);
+            const explosion = document.createElement('div');
+            explosion.className = 'mana-explosion';
+            explosion.style.left = `${e.clientX - 25}px`;
+            explosion.style.top = `${e.clientY - 25}px`;
+            document.body.appendChild(explosion);
+            setTimeout(() => explosion.remove(), 500);
+        });
+
+        // Gamer Card
+        const gameSelect = document.getElementById('game-select');
+        const vibeSelect = document.getElementById('vibe-select');
+        const gamerCardText = document.getElementById('gamer-card-text');
+        const shareGamerCard = document.getElementById('share-gamer-card');
+        function updateGamerCard() {
+            const game = gameSelect.value;
+            const vibe = vibeSelect.value;
+            gamerCardText.textContent = `${vibe} of ${game}`;
+            shareGamerCard.href = `https://twitter.com/intent/tweet?text=I’m a ${vibe} of ${game} at GameVibeHub! What’s your vibe? https://discord.gg/YOUR_INVITE_LINK #GameVibeHub`;
+        }
+        gameSelect.addEventListener('change', updateGamerCard);
+        vibeSelect.addEventListener('change', updateGamerCard);
+        updateGamerCard();
+
+        // Meme Generator
+        const memeInput = document.getElementById('meme-input');
+        const memeText = document.getElementById('meme-text');
+        const downloadMeme = document.getElementById('download-meme');
+        memeInput.addEventListener('input', () => {
+            memeText.textContent = memeInput.value || 'Enter your meme text...';
+        });
+        downloadMeme.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 200;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(0, 0, 300, 200);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(10, 10, 280, 180);
+            ctx.fillStyle = '#ffd700';
+            ctx.fillRect(120, 80, 60, 40);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Press Start 2P';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = '#000000';
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            const text = memeInput.value || 'Your Meme Here';
+            const lines = text.match(/.{1,20}(\s|$)/g) || [text];
+            lines.forEach((line, i) => {
+                ctx.fillText(line.trim(), 150, 100 + i * 20);
+            });
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'gamevibehub-meme.png';
+            link.click();
         });
 
         // Spin the Wheel
         const wheelButton = document.getElementById('spin-wheel');
         const wheelResult = document.getElementById('wheel-result');
         const wheelOptions = [
-            '“Slam a *Hearthstone* combo!”',
-            '“Go all-in at our *Poker* night!”',
-            '“Cast epic *Magic: The Gathering* spells!”',
-            '“Quest in *World of Warcraft*!”',
-            '“Share your *Warframe* Tenno build!”',
-            '“Slay in *Diablo* with the squad!”',
-            '“Drop a *CoD* headshot!”',
-            '“Spell victory in *Scrabble*!”',
-            '“Tweet your fave game vibe!”'
+            'Slam a *Hearthstone* combo!',
+            'Drop a *Fortnite* Victory Royale!',
+            'Cast *Magic: The Gathering* spells!',
+            'Build a *Minecraft* masterpiece!',
+            'Share your *Warframe* Tenno build!',
+            'Go global with #GameVibeHub!',
+            'Join our *Poker* bluff fest!'
         ];
-        wheelButton.addEventListener('click', () => {
+        wheelButton.addEventListener('click', (e) => {
             const randomOption = wheelOptions[Math.floor(Math.random() * wheelOptions.length)];
             wheelResult.textContent = randomOption;
             wheelResult.style.opacity = '0';
             setTimeout(() => wheelResult.style.opacity = '1', 100);
+            const explosion = document.createElement('div');
+            explosion.className = 'mana-explosion';
+            explosion.style.left = `${e.clientX - 25}px`;
+            explosion.style.top = `${e.clientY - 25}px`;
+            document.body.appendChild(explosion);
+            setTimeout(() => explosion.remove(), 500);
         });
 
-        // Konami Code Easter Egg
+        // Konami Code
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
         document.addEventListener('keydown', (e) => {
@@ -496,7 +739,7 @@
             }
         });
 
-        // Fade-in animations
+        // Fade-in
         const fadeIns = document.querySelectorAll('.fade-in');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
