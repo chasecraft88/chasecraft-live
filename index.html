@@ -3,63 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVibeHub - Ultimate Gaming Community</title>
-    <meta name="description" content="Join GameVibeHub for epic Hearthstone streams, AI-powered memes, global leaderboards, and community vibes! Live on TikTok @whispers_from_within. #GameVibeHub">
-    <meta name="keywords" content="Hearthstone, Fortnite --
-
-System: I'm sorry, but I can't generate images or directly embed new images into a website without specific URLs or assets provided by you, as I don't have the capability to create or host images. However, I can guide you on how to add "savage" gaming-themed images to the **GameVibeHub** website (`https://chasecraft88.github.io/clasecraft-live/`, artifact ID `f0f3dd0b-cb58-420b-b7ff-29b42419dd2c`) by updating the `index.html` to include placeholders for these images, along with detailed instructions on where to source or create them. I'll ensure the Discord widget (server ID `241248537231228928`), TikTok embed, leaderboard, AI chat, meme generator, and other features remain intact, as per your previous requests.
-
-### Approach for Adding "Savage" Images
-"Savage" images should be bold, edgy, and gaming-themed (Hearthstone, Fortnite, Minecraft) to match the site’s vibrant aesthetic (neon yellow #ffd700, dark #1a202c). They could include intense gaming moments, meme-style graphics, or iconic characters with a rebellious vibe (e.g., a Hearthstone card exploding, a Fortnite character taunting, a Minecraft creeper with a troll face).
-
-#### 1. Image Selection
-- **Type**:
-  - Hearthstone: Legendary card with fiery effects or a clutch play screenshot.
-  - Fortnite: Victory Royale with a savage emote (e.g., "Take the L" dance).
-  - Minecraft: Creeper with a smirk or an explosion scene.
-  - Meme-style: Text overlays like “Get Rekt” or “Savage AF” on gaming scenes.
-- **Source**:
-  - **Free Stock Sites**: Unsplash, Pexels, or Pixabay for gaming-related images (search “gaming,” “esports,” or “neon art”).
-  - **Fan Art**: DeviantArt or ArtStation for Hearthstone/Fortnite/Minecraft fan art (ensure proper attribution or permission).
-  - **Custom Creation**: Use tools like Canva, Photoshop, or AI image generators (e.g., Midjourney, DALL·E) to create custom memes or graphics.
-  - **Placeholders**: I’ll use temporary URLs from Unsplash/Pexels for now; you can replace them with custom assets.
-- **Format**: Use WebP or optimized PNGs (under 200KB) for fast loading.
-- **Accessibility**: Add alt text and aria-labels for screen readers.
-
-#### 2. Placement
-- **Hero Section**:
-  - Add a background image to `.hero-bg` (e.g., a Hearthstone battlefield with glowing cards).
-  - Apply a dark overlay to keep text readable.
-- **Section Headers**:
-  - Add a small savage icon (e.g., a flaming controller) before each `<h2>` using CSS pseudo-elements.
-- **Big Win Carousel**:
-  - Use a default savage placeholder image (e.g., a “Victory Royale” meme) for wins without media.
-- **Sprite Animation**:
-  - Replace the SVG sprite with a cycling set of images (Hearthstone mana crystal, Fortnite llama, Minecraft creeper).
-  - Keep the floating animation and add a glow effect.
-- **Footer**:
-  - Add a banner image above social links (e.g., gaming characters in a savage pose).
-
-#### 3. Implementation
-- **HTML**: Add `<img>` tags or CSS background images with placeholder URLs.
-- **CSS**: Style images with glow effects, hover animations, and responsive sizing.
-- **JavaScript**: Cycle sprite images every 5 seconds; preserve existing animations (Particle.js, Typed.js, cursor trails).
-- **Preserve Features**:
-  - Discord widget with server ID `241248537231228928`.
-  - TikTok embed for `@whispers_from_within`.
-  - Leaderboard, AI chat (5s cooldown), meme generator, poll, gallery, quote, countdown.
-  - Firebase integration (`/bigwins`, `/leaderboard`, `/gallery`).
-- **Artifact**: Update `f0f3dd0b-cb58-420b-b7ff-29b42419dd2c` with a new version ID.
-
-### Updated `index.html`
-The updated artifact includes placeholder images, new styles, and JavaScript for cycling sprites. Changes are commented for clarity.
-
-<xaiArtifact artifact_id="f0f3dd0b-cb58-420b-b7ff-29b42419dd2c" artifact_version_id="91b05414-3568-471e-a74f-77de97e6acad" title="index.html" contentType="text/html">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- NEW: Disable accelerometer to prevent permissions policy violations -->
+    <meta http-equiv="Permissions-Policy" content="accelerometer=()">
     <title>GameVibeHub - Ultimate Gaming Community</title>
     <meta name="description" content="Join GameVibeHub for epic Hearthstone streams, AI-powered memes, global leaderboards, and community vibes! Live on TikTok @whispers_from_within. #GameVibeHub">
     <meta name="keywords" content="Hearthstone, Fortnite, Minecraft, TikTok, gaming, AI memes, Discord, GameVibeHub">
@@ -378,6 +323,10 @@ The updated artifact includes placeholder images, new styles, and JavaScript for
         #footer-banner:hover {
             transform: scale(1.02);
         }
+        /* NEW: Fallback for Discord widget avatars */
+        #discord-iframe img {
+            background: url('https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=50&auto=format&fit=crop') no-repeat center center/cover;
+        }
     </style>
 </head>
 <body>
@@ -426,7 +375,6 @@ The updated artifact includes placeholder images, new styles, and JavaScript for
             <p class="text-xl text-gray-300 mb-6 fade-in">Join <strong>@whispers_from_within</strong> for electrifying Hearthstone battles every evening at 8 PM EST! Next stream in: <span id="stream-countdown">Calculating...</span></p>
             <p class="text-lg text-gray-400 mb-8 fade-in">Vibe with the community, share #GameVibeHub moments, and catch epic plays live!</p>
             <div id="tiktok-embed" class="fade-in">
-                <!-- TikTok Official Embed -->
                 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@whispers_from_within" data-unique-id="whispers_from_within" data-embed-type="creator" style="max-width: 800px; min-width: 325px;">
                     <section>
                         <a target="_blank" href="https://www.tiktok.com/@whispers_from_within">@whispers_from_within</a>
@@ -546,7 +494,7 @@ The updated artifact includes placeholder images, new styles, and JavaScript for
             </div>
             <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Show Discord Server</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
-                <!-- Discord Widget: Ensure widget is enabled in Server Settings > Widget with an Invite Channel set. -->
+                <!-- Discord Widget: Ensure widget is enabled in Server Settings > Widget with an Invite Channel set -->
                 <iframe id="discord-iframe" src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';document.getElementById('discord-widget').classList.add('hidden');"></iframe>
             </div>
             <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure widget is enabled and an invite channel is set in Discord settings.</p>
@@ -720,7 +668,7 @@ The updated artifact includes placeholder images, new styles, and JavaScript for
                 console.log(`Forced visibility for: ${el.id || el.tagName}`);
             });
 
-            // Discord Widget Load Check
+            // Discord Widget Load Check with Enhanced Error Handling
             const discordIframe = document.getElementById('discord-iframe');
             const discordWidget = document.getElementById('discord-widget');
             const discordError = document.getElementById('discord-error');
@@ -732,6 +680,15 @@ The updated artifact includes placeholder images, new styles, and JavaScript for
                         if (iframeDoc && iframeDoc.body.innerHTML.includes('widget')) {
                             discordWidget.classList.remove('hidden');
                             discordError.style.display = 'none';
+                            // NEW: Monitor for CORS-blocked images
+                            const images = iframeDoc.querySelectorAll('img');
+                            images.forEach(img => {
+                                img.onerror = () => {
+                                    console.warn(`Failed to load Discord avatar: ${img.src}`);
+                                    img.src = 'https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=50&auto=format&fit=crop';
+                                    img.alt = 'Fallback avatar';
+                                };
+                            });
                         } else {
                             throw new Error('Invalid widget content');
                         }
