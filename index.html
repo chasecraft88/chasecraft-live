@@ -15,6 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Typed.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Firebase CDN -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -25,7 +28,6 @@
             position: relative;
             cursor: none;
         }
-        /* Custom Cursor */
         #custom-cursor {
             position: fixed;
             pointer-events: none;
@@ -48,7 +50,6 @@
         @keyframes fadeTrail {
             to { opacity: 0; transform: scale(0); }
         }
-        /* Neon Grid with Mana Glow */
         body::before {
             content: '';
             position: fixed;
@@ -66,7 +67,6 @@
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.5; }
         }
-        /* Floating Sprite */
         #sprite {
             position: fixed;
             left: 50%;
@@ -95,7 +95,6 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
-        /* Mana Explosion */
         .mana-explosion {
             position: absolute;
             width: 50px;
@@ -108,7 +107,6 @@
         @keyframes explode {
             to { transform: scale(2); opacity: 0; }
         }
-        /* Section reveal */
         section {
             opacity: 0;
             transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
@@ -118,7 +116,6 @@
             opacity: 1;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
-        /* Fade-in */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -128,7 +125,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Button hover */
         .btn {
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -137,14 +133,12 @@
             background-color: #ffd700;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
-        /* Hero section */
         .hero-bg {
             background: linear-gradient(180deg, #4b0082, #1a202c);
             height: 100vh;
             position: relative;
             z-index: 1;
         }
-        /* Typed text */
         .typed-text {
             font-family: 'Press Start 2P', cursive;
             font-size: 1.2rem;
@@ -152,7 +146,6 @@
             min-height: 2.5rem;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
         }
-        /* Card hover */
         .feature-card, .membership-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             perspective: 1000px;
@@ -161,7 +154,6 @@
             transform: rotateY(10deg) translateY(-10px);
             box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5);
         }
-        /* Easter egg */
         .rainbow-border {
             animation: rainbow 2s linear infinite;
         }
@@ -174,7 +166,6 @@
             83% { border-color: #ff3399; }
             100% { border-color: #ff0000; }
         }
-        /* Spin wheel */
         #spin-wheel {
             animation: spinGlow 2s ease-in-out infinite;
         }
@@ -182,7 +173,6 @@
             0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
             50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
         }
-        /* Meme generator */
         #meme-canvas {
             position: relative;
             width: 300px;
@@ -253,16 +243,15 @@
                 <div id="game-target" class="w-16 h-16 bg-yellow-500 rounded-lg mx-auto cursor-pointer transition-transform duration-200 hover:scale-110"></div>
                 <p class="text-2xl font-semibold text-white mt-4">Cards Played: <span id="game-score">0</span></p>
                 <p class="text-gray-400 mt-2">Mana Level: <span id="mana-level">Novice</span></p>
-                <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">Claim Your Leaderboard Spot</a>
+                <div class="mt-4">
+                    <input id="username-input" type="text" placeholder="Your Username" class="bg-gray-800 text-white p-2 rounded mb-2 w-full max-w-xs">
+                    <button id="submit-score" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Submit Score</button>
+                </div>
             </div>
             <h3 class="text-2xl font-bold mt-12 mb-6 fade-in">Global Leaderboard</h3>
             <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
-                <ul class="text-left text-gray-300">
-                    <li class="mb-2">🥇 ManaMaster - 10,000 Cards</li>
-                    <li class="mb-2">🥈 DeckSlinger - 8,000 Cards</li>
-                    <li class="mb-2">🥉 VibeKnight - 5,000 Cards</li>
-                </ul>
-                <p class="text-gray-400 mt-4">Join Discord to top the board!</p>
+                <ul id="leaderboard-list" class="text-left text-gray-300"></ul>
+                <p class="text-gray-400 mt-4">Join the top ranks!</p>
             </div>
         </div>
     </section>
@@ -508,6 +497,19 @@
 
     <!-- JavaScript -->
     <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0QZQgiVJMmu0Dx91q5uYPsEEpWSDytoA",
+            authDomain: "gamevibehub-ba607.firebaseapp.com",
+            databaseURL: "https://gamevibehub-ba607-default-rtdb.firebaseio.com",
+            projectId: "gamevibehub-ba607",
+            storageBucket: "gamevibehub-ba607.firebasestorage.app",
+            messagingSenderId: "743860292247",
+            appId: "1:743860292247:web:63ca1a68cc6b480354b7d2"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         // Custom Cursor
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
@@ -587,7 +589,7 @@
         }
         animate();
 
-        // TikTok Stream Countdown (Example: Daily at 8 PM EST)
+        // TikTok Stream Countdown
         const countdownElement = document.getElementById('stream-countdown');
         function updateCountdown() {
             const now = new Date();
@@ -619,10 +621,13 @@
         challengeText.textContent = challenges[today];
         document.querySelector('#daily-challenge a').href = `https://twitter.com/intent/tweet?text=I’m tackling today’s GameVibeHub challenge: ${challenges[today]}! Join me! https://discord.gg/YOUR_INVITE_LINK #GameVibeHub`;
 
-        // Mini Game
+        // Mini Game and Leaderboard
         const gameTarget = document.getElementById('game-target');
         const gameScore = document.getElementById('game-score');
         const manaLevel = document.getElementById('mana-level');
+        const usernameInput = document.getElementById('username-input');
+        const submitScoreButton = document.getElementById('submit-score');
+        const leaderboardList = document.getElementById('leaderboard-list');
         let score = 0;
         const levels = [
             { threshold: 0, name: 'Novice' },
@@ -630,6 +635,7 @@
             { threshold: 20, name: 'Master' },
             { threshold: 50, name: 'Legend' }
         ];
+
         gameTarget.addEventListener('click', (e) => {
             score++;
             gameScore.textContent = score;
@@ -643,6 +649,51 @@
             explosion.style.top = `${e.clientY - 25}px`;
             document.body.appendChild(explosion);
             setTimeout(() => explosion.remove(), 500);
+        });
+
+        submitScoreButton.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (username && score > 0) {
+                if (localStorage.getItem('hasSubmitted')) {
+                    alert('You can only submit one score per session! Refresh to play again.');
+                    return;
+                }
+                database.ref('leaderboard').push({
+                    username: username,
+                    score: score,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    localStorage.setItem('hasSubmitted', 'true');
+                    usernameInput.value = '';
+                    score = 0;
+                    gameScore.textContent = score;
+                    manaLevel.textContent = 'Novice';
+                    alert('Score submitted! Check the leaderboard!');
+                }).catch(error => {
+                    alert('Error submitting score: ' + error.message);
+                });
+            } else {
+                alert('Please enter a username and play some cards!');
+            }
+        });
+
+        database.ref('leaderboard').orderByChild('score').limitToLast(5).on('value', (snapshot) => {
+            leaderboardList.innerHTML = '';
+            const scores = [];
+            snapshot.forEach(child => {
+                scores.push(child.val());
+            });
+            scores.sort((a, b) => b.score - a.score).slice(0, 5).forEach((entry, index) => {
+                const li = document.createElement('li');
+                li.className = 'mb-2';
+                li.textContent = `${index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '🏅'} ${entry.username} - ${entry.score} Cards`;
+                leaderboardList.appendChild(li);
+            });
+            if (scores.length === 0) {
+                leaderboardList.innerHTML = '<li class="mb-2">No scores yet! Be the first!</li>';
+            }
+        }, (error) => {
+            leaderboardList.innerHTML = '<li class="mb-2">Error loading leaderboard. Try again later.</li>';
         });
 
         // Gamer Card
