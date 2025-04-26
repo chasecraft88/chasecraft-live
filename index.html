@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameVibeHub - Epic Gaming Community</title>
-    <meta name="description" content="Join GameVibeHub for Hearthstone streams, AI memes, polls, and global gaming vibes! Watch live on TikTok @whispers_from_within. #GameVibeHub">
+    <title>GameVibeHub - Ultimate Gaming Community</title>
+    <meta name="description" content="Join GameVibeHub for epic Hearthstone streams, AI-powered memes, global leaderboards, and community vibes! Live on TikTok @whispers_from_within. #GameVibeHub">
     <meta name="keywords" content="Hearthstone, Fortnite, Minecraft, TikTok, gaming, AI memes, Discord, GameVibeHub">
     <meta name="author" content="ChaseCraft88">
-    <meta property="og:title" content="GameVibeHub - Epic Gaming Community">
-    <meta property="og:description" content="Join the ultimate gaming hub for streams, memes, and community fun!">
+    <meta property="og:title" content="GameVibeHub - Ultimate Gaming Community">
+    <meta property="og:description" content="Dive into the ultimate gaming hub for streams, memes, and epic community fun!">
     <meta property="og:image" content="https://chasecraft88.github.io/chasecraft-live/og-image.jpg">
     <meta property="og:url" content="https://chasecraft88.github.io/chasecraft-live/">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" onerror="console.error('Failed to load Tailwind CSS')">
@@ -101,10 +101,15 @@
             opacity: 1;
             transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
             position: relative;
+            background: rgba(26, 32, 44, 0.95);
+            border-radius: 12px;
+            margin: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         section.visible {
             opacity: 1;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
         }
         .fade-in {
             opacity: 1;
@@ -121,20 +126,23 @@
         .btn:hover {
             transform: scale(1.05);
             background-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
         .hero-bg {
             background: linear-gradient(180deg, #4b0082, #1a202c);
             height: 100vh;
             position: relative;
             z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .typed-text {
             font-family: 'Press Start 2P', cursive;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             color: #ffffff;
-            min-height: 2.5rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            min-height: 3rem;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
         }
         #grok-panel {
             position: fixed;
@@ -180,9 +188,9 @@
             z-index: 100;
             background: #ffd700;
             color: #1a202c;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
         #book-banner a {
             color: #4b0082;
@@ -192,28 +200,31 @@
         #meme-previews {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
         }
         #meme-previews img {
-            max-width: 150px;
+            max-width: 180px;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 3px solid transparent;
+            border-radius: 8px;
+            transition: border 0.3s ease;
         }
         #meme-previews img:hover {
-            border: 2px solid Helsingin;
+            border: 3px solid #ffd700;
         }
         .error-message {
             color: #ff4444;
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-top: 10px;
         }
         #tiktok-widget {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
-            border: 2px solid #ffd700;
-            border-radius: 8px;
+            border: 3px solid #ffd700;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         #tiktok-fallback {
             display: none;
@@ -224,7 +235,7 @@
         #discord-widget {
             max-width: 400px;
             margin: 0 auto;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, height 0.3s ease;
         }
         #discord-widget.hidden {
             opacity: 0;
@@ -234,8 +245,8 @@
         #discord-error {
             display: none;
             color: #ff4444;
-            font-size: 0.9rem;
-            margin-top: 10px;
+            font-size: 1rem;
+            margin-top: 15px;
         }
         #big-win-carousel {
             display: flex;
@@ -245,14 +256,15 @@
             scroll-snap-type: x mandatory;
         }
         .big-win-card {
-            flex: 0 0 300px;
+            flex: 0 0 320px;
             background: #2d3748;
             border: 4px solid #ffd700;
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
             animation: bigWinPulse 2s ease-in-out infinite;
             scroll-snap-align: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
         }
         @keyframes bigWinPulse {
             0%, 100% { transform: scale(1); }
@@ -260,9 +272,22 @@
         }
         .big-win-card img, .big-win-card video {
             max-width: 100%;
-            height: 150px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 8px;
+        }
+        .section-header {
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+            50% { text-shadow: 0 0 25px rgba(255, 215, 0, 1); }
+        }
+        footer {
+            background: #1a202c;
+            border-top: 4px solid #ffd700;
+            box-shadow: 0 -4px 10px rgba(255, 215, 0, 0.3);
         }
     </style>
 </head>
@@ -284,8 +309,8 @@
         </svg>
     </div>
     <div id="book-banner" class="fade-in" role="banner">
-        <p>Discover <strong>Echo of Silence: Whispers of the Unseen</strong>! 
-        <a href="https://www.amazon.com/Echo-Silence-Whispers-Unseen-ebook/dp/B0DDJVPYRB?ref_=ast_author_dp" target="_blank">Get it now on Amazon!</a></p>
+        <p>Grab <strong>Echo of Silence: Whispers of the Unseen</strong> now! 
+        <a href="https://www.amazon.com/Echo-Silence-Whispers-Unseen-ebook/dp/B0DDJVPYRB?ref_=ast_author_dp" target="_blank">Available on Amazon!</a></p>
     </div>
     <button id="grok-toggle" class="btn bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg" aria-label="Toggle AI Chat">Chat with AI</button>
     <div id="grok-panel" role="complementary">
@@ -298,132 +323,138 @@
             <p id="chat-error" class="error-message hidden"></p>
         </div>
     </div>
-    <section id="hero" class="hero-bg flex items-center justify-center text-center">
+    <section id="hero" class="hero-bg text-center">
         <div class="container mx-auto px-4">
-            <h1 class="text-5xl md:text-7xl font-bold text-yellow-500 mb-6 fade-in">GameVibeHub</h1>
+            <h1 class="text-5xl md:text-7xl font-bold text-yellow-500 mb-6 fade-in section-header">GameVibeHub</h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-6 fade-in">Your ultimate gaming haven! Slam Hearthstone cards, drop Fortnite dubs, and build Minecraft legends with a global crew!</p>
             <p id="typed-text" class="typed-text mx-auto"></p>
             <div class="mt-8 space-x-4 fade-in">
-                <a href="#tiktok-stream" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg">Watch Live Stream</a>
-                <a href="#meme" class="btn inline-block bg-yellow-500 text-gray-900 font-semibold py-3 px-6 rounded-lg">Create AI Memes</a>
+                <a href="#tiktok-stream" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg">Catch Live Streams</a>
+                <a href="#meme" class="btn inline-block bg-yellow-500 text-gray-900 font-semibold py-3 px-6 rounded-lg">Craft AI Memes</a>
+                <a href="#big-win" class="btn inline-block bg-red-600 text-white font-semibold py-3 px-6 rounded-lg">Share Epic Wins</a>
             </div>
         </div>
     </section>
-    <section id="tiktok-stream" class="py-20 bg-gray-900">
+    <section id="tiktok-stream" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Live TikTok Stream</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Catch <strong>@whispers_from_within</strong> streaming Hearthstone every evening at 8 PM EST! Next stream in: <span id="stream-countdown">Calculating...</span></p>
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">Live TikTok Action</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Join <strong>@whispers_from_within</strong> for electrifying Hearthstone battles every evening at 8 PM EST! Next stream in: <span id="stream-countdown">Calculating...</span></p>
+            <p class="text-lg text-gray-400 mb-8 fade-in">Vibe with the community, share #GameVibeHub moments, and catch epic plays live!</p>
             <div id="tiktok-widget" class="fade-in">
                 <!-- Tagembed TikTok Widget: Replace YOUR_TAGEMBED_WALL_ID with your Tagembed wall ID from https://tagembed.com -->
                 <script src="https://widget.tagembed.com/embed.min.js" onerror="console.error('Failed to load Tagembed script')"></script>
-                <div class="tagembed-container" style="width:100%;height:400px;overflow:auto;">
+                <div class="tagembed-container" style="width:100%;height:600px;overflow:auto;">
                     <div class="tagembed-socialwall" data-wall-id="YOUR_TAGEMBED_WALL_ID" data-platform="tiktok" data-source="handle" data-handle="whispers_from_within"></div>
                 </div>
             </div>
             <div id="tiktok-fallback" class="max-w-2xl mx-auto fade-in">
                 <lottie-player src="https://assets.lottiefiles.com/packages/lf20_kkflmtur.json" background="transparent" speed="1" style="width: 100%; height: 400px;" loop autoplay></lottie-player>
+                <p class="text-gray-400 mt-4">TikTok widget loading... Join <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400">our TikTok</a> for live action!</p>
             </div>
-            <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4 fade-in">Join on TikTok</a>
+            <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mt-6 fade-in">Vibe on TikTok</a>
         </div>
     </section>
-    <section id="poll" class="py-20 bg-gray-800">
+    <section id="poll" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Daily Gaming Poll</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Vote for your favorite game and see what the community loves! #GameVibeHub</p>
-            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
-                <div class="mb-4">
-                    <button class="poll-btn btn bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg mr-2" data-game="hearthstone">Hearthstone</button>
-                    <button class="poll-btn btn bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg mr-2" data-game="fortnite">Fortnite</button>
-                    <button class="poll-btn btn bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg" data-game="minecraft">Minecraft</button>
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">Daily Gaming Showdown</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Which game reigns supreme? Cast your vote and rally the #GameVibeHub community!</p>
+            <div class="bg-gray-900 p-8 rounded-lg max-w-md mx-auto fade-in">
+                <div class="mb-6">
+                    <button class="poll-btn btn bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg mr-3" data-game="hearthstone">Hearthstone</button>
+                    <button class="poll-btn btn bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg mr-3" data-game="fortnite">Fortnite</button>
+                    <button class="poll-btn btn bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg" data-game="minecraft">Minecraft</button>
                 </div>
-                <div id="poll-results" class="text-gray-300"></div>
+                <div id="poll-results" class="text-gray-300 text-lg"></div>
             </div>
         </div>
     </section>
-    <section id="meme" class="py-20 bg-gray-900">
+    <section id="meme" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">AI-Powered Meme Generator</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Create epic gaming memes with AI and go viral with #GameVibeHub!</p>
-            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
-                <input id="meme-input" type="text" placeholder="Enter your meme text (e.g., Hearthstone fail)" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter meme text">
-                <select id="meme-template" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Select meme template">
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">AI Meme Forge</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Unleash your inner meme lord! Create hilarious gaming memes with AI and share with #GameVibeHub!</p>
+            <div class="bg-gray-900 p-8 rounded-lg max-w-md mx-auto fade-in">
+                <input id="meme-input" type="text" placeholder="Enter your meme idea (e.g., Hearthstone clutch fail)" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter meme text">
+                <select id="meme-template" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Select meme template">
                     <option value="drake">Drake Hotline Bling</option>
                     <option value="distracted_bf">Distracted Boyfriend</option>
                     <option value="grumpy_cat">Grumpy Cat</option>
                     <option value="spongebob">Spongebob Mocking</option>
                 </select>
-                <button id="generate-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mb-4" aria-label="Generate Meme">Generate AI Meme</button>
+                <button id="generate-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-4" aria-label="Generate Meme">Forge Your Meme</button>
                 <div id="meme-previews"></div>
                 <p id="meme-error" class="error-message hidden"></p>
                 <canvas id="meme-image" width="300" height="200" class="hidden"></canvas>
-                <button id="download-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4 hidden" aria-label="Download Meme">Download Meme</button>
+                <button id="download-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mt-4 hidden" aria-label="Download Meme">Download Meme</button>
             </div>
         </div>
     </section>
-    <section id="leaderboard" class="py-20 bg-gray-800">
+    <section id="leaderboard" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Global Leaderboard</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Submit your gaming score and climb the ranks! #GameVibeHub</p>
-            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
-                <input id="username" type="text" placeholder="Enter your username" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter username">
-                <input id="score" type="number" placeholder="Enter your score" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter score">
-                <button id="submit-score" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg" aria-label="Submit score">Submit Score</button>
-                <div id="leaderboard-list" class="mt-6 text-gray-300"></div>
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">Global Leaderboard</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Crush the competition! Submit your scores and claim your spot among #GameVibeHub legends!</p>
+            <div class="bg-gray-900 p-8 rounded-lg max-w-md mx-auto fade-in">
+                <input id="username" type="text" placeholder="Enter your username" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter username">
+                <input id="score" type="number" placeholder="Enter your score" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter score">
+                <button id="submit-score" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg" aria-label="Submit score">Submit Score</button>
+                <div id="leaderboard-list" class="mt-6 text-gray-300 text-lg"></div>
             </div>
         </div>
     </section>
-    <section id="gallery" class="py-20 bg-gray-900">
+    <section id="gallery" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Community Gallery</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Share your gaming moments and inspire the community! #GameVibeHub</p>
-            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
-                <input id="image-url" type="text" placeholder="Enter image URL" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter image URL">
-                <input id="caption" type="text" placeholder="Enter caption" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter caption">
-                <button id="submit-image" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg" aria-label="Submit image">Submit Image</button>
-                <div id="gallery-images" class="mt-6 flex flex-wrap gap-4 justify-center"></div>
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">Community Gallery</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Showcase your epic gaming moments and inspire the #GameVibeHub crew!</p>
+            <div class="bg-gray-900 p-8 rounded-lg max-w-md mx-auto fade-in">
+                <input id="image-url" type="text" placeholder="Enter image URL" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter image URL">
+                <input id="caption" type="text" placeholder="Enter caption" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter caption">
+                <button id="submit-image" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg" aria-label="Submit image">Share Image</button>
+                <div id="gallery-images" class="mt-8 flex flex-wrap gap-6 justify-center"></div>
             </div>
         </div>
     </section>
-    <section id="quote" class="py-20 bg-gray-800">
+    <section id="quote" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Daily Gaming Quote</h2>
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">Daily Gaming Wisdom</h2>
             <p id="daily-quote" class="text-xl text-gray-300 mb-6 fade-in italic">"Loading epic quote..."</p>
-            <button id="new-quote" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg fade-in">Get New Quote</button>
+            <button id="new-quote" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg fade-in">Get New Quote</button>
         </div>
     </section>
-    <section id="big-win" class="py-20 bg-gray-900">
+    <section id="big-win" class="py-20">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Big Win Game Moments</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Share your epic Hearthstone, Fortnite, or Minecraft victories! #GameVibeHub</p>
-            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in mb-8">
-                <input id="win-username" type="text" placeholder="Enter your username" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter username">
-                <select id="win-game" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Select game">
+            <h2 class="text-4xl font-bold mb-12 fade-in section-header">Epic Win Showcase</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Got a clutch Hearthstone play, Fortnite victory, or Minecraft masterpiece? Share it with #GameVibeHub!</p>
+            <div class="bg-gray-900 p-8 rounded-lg max-w-md mx-auto fade-in mb-8">
+                <input id="win-username" type="text" placeholder="Enter your username" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter username">
+                <select id="win-game" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Select game">
                     <option value="hearthstone">Hearthstone</option>
                     <option value="fortnite">Fortnite</option>
                     <option value="minecraft">Minecraft</option>
                 </select>
-                <textarea id="win-description" placeholder="Describe your epic moment (e.g., Clutch Hearthstone play!)" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" rows="4" aria-label="Enter description"></textarea>
-                <input id="win-media" type="text" placeholder="Enter image or video URL" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter media URL">
-                <button id="submit-win" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg" aria-label="Submit win">Submit Your Win!</button>
+                <textarea id="win-description" placeholder="Describe your epic moment (e.g., Clutch Hearthstone play!)" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" rows="4" aria-label="Enter description"></textarea>
+                <input id="win-media" type="text" placeholder="Enter image or video URL" class="bg-gray-800 text-white p-3 rounded mb-4 w-full" aria-label="Enter media URL">
+                <button id="submit-win" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg" aria-label="Submit win">Submit Your Win!</button>
                 <p id="win-error" class="error-message hidden"></p>
             </div>
             <div id="big-win-carousel" class="fade-in"></div>
-            <button id="view-more-wins" class="btn inline-block bg-yellow-500 text-gray-900 font-semibold py-2 px-6 rounded-lg mt-4 hidden" aria-label="View more wins">View More</button>
+            <button id="view-more-wins" class="btn inline-block bg-yellow-500 text-gray-900 font-semibold py-3 px-8 rounded-lg mt-6 hidden" aria-label="View more wins">More Epic Wins</button>
         </div>
     </section>
-    <footer class="bg-gray-900 py-12 text-center">
+    <footer class="py-12 text-center">
         <div class="container mx-auto px-4">
-            <p class="text-gray-300 mb-4 fade-in">© 2025 GameVibeHub. All rights reserved.</p>
-            <div class="flex justify-center space-x-6 fade-in">
+            <h3 class="text-2xl font-bold text-yellow-500 mb-4 fade-in">Join the GameVibeHub Community</h3>
+            <p class="text-gray-300 mb-6 fade-in">Connect with gamers worldwide, share your victories, and vibe with us on socials! #GameVibeHub</p>
+            <div class="flex justify-center space-x-8 mb-6 fade-in">
                 <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
                 <a href="https://discord.gg/your-discord" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Discord"><i class="fab fa-discord fa-2x"></i></a>
                 <a href="https://twitter.com/ChaseCraft88" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Twitter"><i class="fab fa-twitter fa-2x"></i></a>
             </div>
-            <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4 fade-in" aria-label="Toggle Discord Widget">Show Discord Community</button>
+            <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Join Our Discord</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
-                <!-- Replace YOUR_DISCORD_SERVER_ID with your Discord server ID from Server Settings > Widget -->
-                <iframe src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';this.style.display='none';"></iframe>
+                <!-- Discord Widget: Replace YOUR_DISCORD_SERVER_ID with your server ID from Server Settings > Widget -->
+                <iframe src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';this.classList.add('hidden');"></iframe>
             </div>
-            <p id="discord-error" class="error-message">Failed to load Discord widget. Check server ID.</p>
+            <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure server ID is valid and widget is enabled.</p>
+            <p class="text-gray-300 mt-6 fade-in">© 2025 GameVibeHub. Crafted with 💛 for gamers worldwide.</p>
         </div>
     </footer>
     <script type="module">
@@ -483,18 +514,18 @@
 
         particlesJS('particles-js', {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
+                number: { value: 100, density: { enable: true, value_area: 800 } },
                 color: { value: '#ffd700' },
                 shape: { type: 'circle' },
-                opacity: { value: 0.5, random: false },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 150, color: '#ffd700', opacity: 0.4, width: 1 },
-                move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false }
+                opacity: { value: 0.6, random: true },
+                size: { value: 4, random: true },
+                line_linked: { enable: true, distance: 150, color: '#ffd700', opacity: 0.5, width: 1 },
+                move: { enable: true, speed: 8, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false }
             },
             interactivity: {
                 detect_on: 'canvas',
                 events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                modes: { repulse: { distance: 120, duration: 0.4 }, push: { particles_nb: 4 } }
             },
             retina_detect: true
         });
@@ -520,12 +551,13 @@
                 typed = new Typed('#typed-text', {
                     strings: [
                         'Welcome to GameVibeHub!',
-                        'Slam *Hearthstone* cards live on TikTok!',
-                        'Build epic *Minecraft* creations!',
+                        'Slam *Hearthstone* cards live!',
+                        'Build epic *Minecraft* worlds!',
                         'Drop *Fortnite* dubs with us!',
-                        'Create AI memes and go viral!',
+                        'Create viral AI memes!',
                         'Chat with AI for epic vibes!',
-                        'Join daily global challenges!'
+                        'Join global gaming challenges!',
+                        'Vibe with #GameVibeHub!'
                     ],
                     typeSpeed: 50,
                     backSpeed: 30,
@@ -582,7 +614,7 @@
         const grokChat = document.getElementById('grok-chat');
         const chatInput = document.getElementById('chat-input');
         const chatSubmit = document.getElementById('chat-submit');
-        const roastMe = = document.getElementById('roast-me');
+        const roastMe = document.getElementById('roast-me');
         const chatError = document.getElementById('chat-error');
         let lastRequestTime = 0;
         const COOLDOWN_MS = 5000;
@@ -820,7 +852,7 @@
                     const img = document.createElement('img');
                     img.src = data.data.url;
                     img.alt = 'Generated meme';
-                    img.style.maxWidth = '150px';
+                    img.style.maxWidth = '180px';
                     img.onclick = () => {
                         const fullImg = new Image();
                         fullImg.crossOrigin = 'Anonymous';
@@ -894,7 +926,7 @@
                     const percentage = totalVotes ? ((votes / totalVotes) * 100).toFixed(1) : 0;
                     results += `${game.charAt(0).toUpperCase() + game.slice(1)}: ${votes} votes (${percentage}%)<br>`;
                 }
-                pollResults.innerHTML = totalVotes ? results : 'No votes yet!';
+                pollResults.innerHTML = totalVotes ? results : 'No votes yet! Be the first!';
             });
         }
         updatePollResults();
@@ -928,8 +960,8 @@
                     .sort((a, b) => b.score - a.score)
                     .slice(0, 10);
                 leaderboardList.innerHTML = scores.length
-                    ? scores.map((entry, i) => `${i + 1}. ${entry.username}: ${entry.score}`).join('<br>')
-                    : 'No scores yet!';
+                    ? scores.map((entry, i) => `<span class="text-yellow-500">${i + 1}.</span> ${entry.username}: ${entry.score}`).join('<br>')
+                    : 'No scores yet! Start climbing!';
             });
         }
         updateLeaderboard();
@@ -958,22 +990,22 @@
                 const images = Object.values(data);
                 galleryImages.innerHTML = images.length
                     ? images.map(img => `
-                        <div class="bg-gray-800 p-2 rounded">
-                            <img src="${img.url}" alt="${img.caption}" class="w-32 h-32 object-cover rounded">
+                        <div class="bg-gray-800 p-3 rounded-lg">
+                            <img src="${img.url}" alt="${img.caption}" class="w-40 h-40 object-cover rounded-lg">
                             <p class="text-gray-300 text-sm mt-2">${img.caption}</p>
                         </div>
                     `).join('')
-                    : '<p>No images yet!</p>';
+                    : '<p>No images yet! Share your moments!</p>';
             });
         }
         updateGallery();
 
         const quotes = [
-            "In Hearthstone, even a Murloc can be a legend. Believe in your deck!",
-            "Fortnite dubs are built on sweat and a sturdy build. Keep grinding!",
-            "Minecraft: Where every block you place tells a story. Build epic!",
-            "Gaming is life, and GameVibeHub is the vibe. Let's play!",
-            "A true gamer never blames the lag—they adapt and conquer!"
+            "In Hearthstone, every mana crystal is a chance for glory. Play bold!",
+            "Fortnite: Build fast, love slow, win big. #GameVibeHub",
+            "Minecraft: One block at a time, you craft your legend!",
+            "Gaming is our escape, GameVibeHub is our home. Join us!",
+            "Lag tests your skill, victory proves your heart. Keep gaming!"
         ];
         const dailyQuote = document.getElementById('daily-quote');
         const newQuote = document.getElementById('new-quote');
@@ -1052,12 +1084,12 @@
                 carousel.innerHTML = wins.length
                     ? wins.map(win => `
                         <div class="big-win-card">
-                            <h3 class="text-lg font-bold text-yellow-500">${win.username}'s ${win.game.charAt(0).toUpperCase() + win.game.slice(1)} Win</h3>
+                            <h3 class="text-xl font-bold text-yellow-500">${win.username}'s ${win.game.charAt(0).toUpperCase() + win.game.slice(1)} Victory</h3>
                             <p class="text-gray-300 mt-2">${win.description}</p>
                             ${win.media ? (win.media.includes('.mp4') || win.media.includes('.webm') ? `<video src="${win.media}" controls></video>` : `<img src="${win.media}" alt="${win.description}">`) : ''}
                         </div>
                     `).join('')
-                    : '<p>No epic wins yet! Submit yours!</p>';
+                    : '<p>No epic wins yet! Submit yours to shine!</p>';
                 document.getElementById('view-more-wins').classList.toggle('hidden', wins.length < 5);
             });
         }
@@ -1073,7 +1105,7 @@
         discordToggle.addEventListener('click', () => {
             console.log('Discord toggle clicked');
             discordWidget.classList.toggle('hidden');
-            discordToggle.textContent = discordWidget.classList.contains('hidden') ? 'Show Discord Community' : 'Hide Discord Community';
+            discordToggle.textContent = discordWidget.classList.contains('hidden') ? 'Join Our Discord' : 'Hide Discord';
         });
     </script>
 </body>
