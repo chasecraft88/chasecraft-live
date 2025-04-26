@@ -11,12 +11,12 @@
     <meta property="og:description" content="Join the ultimate gaming hub for streams, memes, and community fun!">
     <meta property="og:image" content="https://chasecraft88.github.io/chasecraft-live/og-image.jpg">
     <meta property="og:url" content="https://chasecraft88.github.io/chasecraft-live/">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" onerror="console.error('Failed to load Tailwind CSS')">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" onerror="console.error('Failed to load Font Awesome')">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" onerror="console.error('Failed to load Typed.js')"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" onerror="console.error('Failed to load Particles.js')"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" onerror="console.error('Failed to load Lottie Player')"></script>
     <style>
         body {
             font-family: 'Orbitron', sans-serif;
@@ -98,7 +98,7 @@
             to { transform: scale(2); opacity: 0; }
         }
         section {
-            opacity: 0;
+            opacity: 1; /* Ensure sections are visible by default */
             transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
             position: relative;
         }
@@ -107,8 +107,8 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 1; /* Ensure fade-in elements are visible */
+            transform: translateY(0);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .fade-in.visible {
@@ -353,6 +353,17 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        // Debug: Verify DOM elements
+        console.log('DOM Loaded. Checking elements...');
+        console.log('Hero:', document.getElementById('hero'));
+        console.log('TikTok Stream:', document.getElementById('tiktok-stream'));
+        console.log('Poll:', document.getElementById('poll'));
+        console.log('Meme:', document.getElementById('meme'));
+        console.log('Leaderboard:', document.getElementById('leaderboard'));
+        console.log('Gallery:', document.getElementById('gallery'));
+        console.log('Quote:', document.getElementById('quote'));
+        console.log('Footer:', document.querySelector('footer'));
+
         // Fetch OpenAI API key
         let OPENAI_API_KEY = '';
         async function loadApiKey() {
@@ -403,6 +414,7 @@
 
         // Animation and Cursor
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded fired');
             const cursor = document.getElementById('custom-cursor');
             const sprite = document.getElementById('sprite');
             document.addEventListener('mousemove', (e) => {
@@ -418,6 +430,7 @@
 
             let typed;
             function startTyping() {
+                console.log('Starting Typed.js');
                 typed = new Typed('#typed-text', {
                     strings: [
                         'Welcome to GameVibeHub!',
@@ -451,10 +464,8 @@
                     hasTriggeredTyping = true;
                 }
                 document.querySelectorAll('section').forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    if (spriteY > rect.top + window.scrollY) {
-                        section.classList.add('visible');
-                    }
+                    section.classList.add('visible'); // Force visibility
+                    section.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
                 });
                 if (spriteY > document.body.scrollHeight) {
                     sprite.style.top = '-100px';
@@ -474,6 +485,11 @@
                 requestAnimationFrame(animate);
             }
             animate();
+            // Force initial visibility
+            document.querySelectorAll('section, .fade-in').forEach(el => {
+                el.classList.add('visible');
+                console.log(`Forced visibility for: ${el.id || el.tagName}`);
+            });
         });
 
         // AI Chat Logic
@@ -484,6 +500,8 @@
         const chatSubmit = document.getElementById('chat-submit');
         const roastMe = document.getElementById('roast-me');
         const chatError = document.getElementById('chat-error');
+        let lastRequestTime = 0;
+        const COOLDOWN_MS = 5000; // 5s cooldown
 
         function addChatMessage(message, isUser = false) {
             const div = document.createElement('div');
@@ -494,6 +512,16 @@
         }
 
         async function sendChatMessage(message, type = 'chat', retryCount = 0) {
+            const now = Date.now();
+            if (now - lastRequestTime < COOLDOWN_MS) {
+                const errorMsg = 'Slow down! Wait a moment before chatting again.';
+                addChatMessage(errorMsg);
+                chatError.textContent = errorMsg;
+                chatError.classList.remove('hidden');
+                return;
+            }
+            lastRequestTime = now;
+
             if (!OPENAI_API_KEY) {
                 const errorMsg = 'Cannot connect to AI: API key not loaded.';
                 addChatMessage(errorMsg);
@@ -536,7 +564,7 @@
 
                 if (!response.ok) {
                     if (response.status === 429 && retryCount < 3) {
-                        const delay = Math.pow(2, retryCount) * 1000;
+                        const delay = Math.pow(2, retryCount) * 2000; // 2000, 4000, 8000ms
                         console.warn(`Rate limit hit. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return sendChatMessage(message, type, retryCount + 1);
@@ -558,7 +586,9 @@
                 }
             } catch (error) {
                 grokChat.lastChild.remove();
-                const errorMsg = `AI error: ${error.message}. Check console.`;
+                const errorMsg = error.message.includes('429')
+                    ? 'AI is overloaded! Try again in a minute.'
+                    : `AI error: ${error.message}. Check console.`;
                 addChatMessage(errorMsg);
                 chatError.textContent = errorMsg;
                 chatError.classList.remove('hidden');
@@ -622,6 +652,14 @@
         }
 
         async function generateMemeCaption(text, retryCount = 0) {
+            const now = Date.now();
+            if (now - lastRequestTime < COOLDOWN_MS) {
+                memeError.textContent = 'Slow down! Wait a moment before generating another meme.';
+                memeError.classList.remove('hidden');
+                return text;
+            }
+            lastRequestTime = now;
+
             if (!OPENAI_API_KEY) {
                 memeError.textContent = 'Cannot generate caption: API key not loaded.';
                 memeError.classList.remove('hidden');
@@ -644,7 +682,7 @@
 
                 if (!response.ok) {
                     if (response.status === 429 && retryCount < 3) {
-                        const delay = Math.pow(2, retryCount) * 1000;
+                        const delay = Math.pow(2, retryCount) * 2000; // 2000, 4000, 8000ms
                         console.warn(`Rate limit hit for caption. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return generateMemeCaption(text, retryCount + 1);
@@ -656,7 +694,9 @@
                 return data.choices && data.choices[0].message.content ? data.choices[0].message.content.trim() : text;
             } catch (error) {
                 console.error('Meme caption error:', error);
-                memeError.textContent = `Caption error: ${error.message}`;
+                memeError.textContent = error.message.includes('429')
+                    ? 'AI is overloaded! Try again in a minute.'
+                    : `Caption error: ${error.message}`;
                 memeError.classList.remove('hidden');
                 return text;
             }
@@ -714,7 +754,7 @@
                 }
             } catch (error) {
                 if (error.message.includes('429') && retryCount < 3) {
-                    const delay = Math.pow(2, retryCount) * 1000;
+                    const delay = Math.pow(2, retryCount) * 2000;
                     console.warn(`Rate limit hit for Imgflip. Retrying in ${delay}ms...`);
                     await new Promise(resolve => setTimeout(resolve, delay));
                     return generateMemes(text, template, retryCount + 1);
