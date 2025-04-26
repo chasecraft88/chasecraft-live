@@ -463,10 +463,12 @@
             </div>
             <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Show Discord Server</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
-                <!-- Discord Widget: Replace YOUR_DISCORD_SERVER_ID with your server ID from Server Settings > Widget -->
-                <iframe src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';this.classList.add('hidden');"></iframe>
+                <!-- Discord Widget: Replace YOUR_DISCORD_SERVER_ID with your server ID from Server Settings > Widget.
+                     To enable: Go to Discord Server Settings > Widget, enable "Enable Server Widget", select an Invite Channel, and copy the Server ID.
+                     The widget will show server name, online members, and a "Connect" button if configured correctly. -->
+                <iframe id="discord-iframe" src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';document.getElementById('discord-widget').classList.add('hidden');"></iframe>
             </div>
-            <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure server ID is valid and widget is enabled.</p>
+            <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure server ID is valid, widget is enabled, and an invite channel is set in Discord settings.</p>
             <p class="text-gray-300 mt-6 fade-in">© 2025 GameVibeHub. Crafted with 💛 for gamers worldwide.</p>
         </div>
     </footer>
@@ -620,6 +622,29 @@
                 el.classList.add('visible');
                 console.log(`Forced visibility for: ${el.id || el.tagName}`);
             });
+
+            // Discord Widget Load Check
+            const discordIframe = document.getElementById('discord-iframe');
+            const discordWidget = document.getElementById('discord-widget');
+            const discordError = document.getElementById('discord-error');
+            if (discordIframe) {
+                discordIframe.addEventListener('load', () => {
+                    console.log('Discord widget iframe loaded');
+                    try {
+                        const iframeDoc = discordIframe.contentDocument || discordIframe.contentWindow.document;
+                        if (iframeDoc && iframeDoc.body.innerHTML.includes('widget')) {
+                            discordWidget.classList.remove('hidden');
+                            discordError.style.display = 'none';
+                        } else {
+                            throw new Error('Invalid widget content');
+                        }
+                    } catch (e) {
+                        console.error('Discord widget load check failed:', e);
+                        discordWidget.classList.add('hidden');
+                        discordError.style.display = 'block';
+                    }
+                });
+            }
         });
 
         const grokToggle = document.getElementById('grok-toggle');
@@ -781,7 +806,7 @@
 
         async function generateMemeCaption(text, retryCount = 0) {
             const now = Date.now();
-            if (now - lastRequestTime < COOLDOWN_MS) {
+            if (now - LastRequestTime < COOLDOWN_MS) {
                 memeError.textContent = 'Slow down! Wait a moment before generating another meme.';
                 memeError.classList.remove('hidden');
                 return text;
