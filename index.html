@@ -226,6 +226,10 @@
             overflow: hidden;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
+        #tiktok-embed {
+            max-width: 800px;
+            margin: 0 auto;
+        }
         #tiktok-fallback {
             display: none;
         }
@@ -340,8 +344,17 @@
             <h2 class="text-4xl font-bold mb-12 fade-in section-header">Live TikTok Action</h2>
             <p class="text-xl text-gray-300 mb-6 fade-in">Join <strong>@whispers_from_within</strong> for electrifying Hearthstone battles every evening at 8 PM EST! Next stream in: <span id="stream-countdown">Calculating...</span></p>
             <p class="text-lg text-gray-400 mb-8 fade-in">Vibe with the community, share #GameVibeHub moments, and catch epic plays live!</p>
+            <div id="tiktok-embed" class="fade-in">
+                <!-- TikTok Official Embed -->
+                <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@whispers_from_within" data-unique-id="whispers_from_within" data-embed-type="creator" style="max-width: 800px; min-width: 325px;">
+                    <section>
+                        <a target="_blank" href="https://www.tiktok.com/@whispers_from_within">@whispers_from_within</a>
+                    </section>
+                </blockquote>
+                <script async src="https://www.tiktok.com/embed.js" onerror="console.error('Failed to load TikTok embed script')"></script>
+            </div>
             <div id="tiktok-widget" class="fade-in">
-                <!-- Tagembed TikTok Widget: Replace YOUR_TAGEMBED_WALL_ID with your Tagembed wall ID from https://tagembed.com -->
+                <!-- Tagembed Fallback: Replace YOUR_TAGEMBED_WALL_ID with your Tagembed wall ID from https://tagembed.com -->
                 <script src="https://widget.tagembed.com/embed.min.js" onerror="console.error('Failed to load Tagembed script')"></script>
                 <div class="tagembed-container" style="width:100%;height:600px;overflow:auto;">
                     <div class="tagembed-socialwall" data-wall-id="YOUR_TAGEMBED_WALL_ID" data-platform="tiktok" data-source="handle" data-handle="whispers_from_within"></div>
@@ -448,7 +461,7 @@
                 <a href="https://discord.gg/your-discord" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Discord"><i class="fab fa-discord fa-2x"></i></a>
                 <a href="https://twitter.com/ChaseCraft88" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Twitter"><i class="fab fa-twitter fa-2x"></i></a>
             </div>
-            <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Join Our Discord</button>
+            <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Show Discord Server</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
                 <!-- Discord Widget: Replace YOUR_DISCORD_SERVER_ID with your server ID from Server Settings > Widget -->
                 <iframe src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';this.classList.add('hidden');"></iframe>
@@ -1105,7 +1118,7 @@
         discordToggle.addEventListener('click', () => {
             console.log('Discord toggle clicked');
             discordWidget.classList.toggle('hidden');
-            discordToggle.textContent = discordWidget.classList.contains('hidden') ? 'Join Our Discord' : 'Hide Discord';
+            discordToggle.textContent = discordWidget.classList.contains('hidden') ? 'Show Discord Server' : 'Hide Discord Server';
         });
     </script>
 </body>
