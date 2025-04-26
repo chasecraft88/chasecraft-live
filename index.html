@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- NEW: Disable accelerometer to prevent permissions policy violations -->
     <meta http-equiv="Permissions-Policy" content="accelerometer=()">
     <title>GameVibeHub - Ultimate Gaming Community</title>
     <meta name="description" content="Join GameVibeHub for epic Hearthstone streams, AI-powered memes, global leaderboards, and community vibes! Live on TikTok @whispers_from_within. #GameVibeHub">
@@ -18,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" onerror="console.error('Failed to load Typed.js')"></script>
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js" onerror="console.error('Failed to load Particles.js')"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" onerror="console.error('Failed to load Lottie Player')"></script>
     <style>
         body {
             font-family: 'Orbitron', sans-serif;
@@ -61,32 +59,22 @@
         }
         #sprite {
             position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
             z-index: 10;
-            animation: floatDown 15s linear infinite, bob 2s ease-in-out infinite, sway 4s ease-in-out infinite;
             pointer-events: none;
             width: 60px;
             height: 60px;
+            transition: left 2s ease-out, top 2s ease-out;
         }
         #sprite img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        @keyframes floatDown {
-            0% { top: -100px; }
-            100% { top: 100%; }
+            animation: pulse 1.5s ease-in-out infinite, bob 2s ease-in-out infinite;
         }
         @keyframes bob {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, -10px); }
-        }
-        @keyframes sway {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-60%, 0); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
@@ -108,7 +96,7 @@
             opacity: 1;
             transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
             position: relative;
-            background: rgba(26, 32, 44, 0.95);
+            background: rgba(45, 55, 72, 0.95);
             border-radius: 12px;
             margin: 20px;
             padding: 40px;
@@ -136,8 +124,7 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
         .hero-bg {
-            /* NEW: Savage background image with overlay */
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1610563166150-b34df4f3b01d?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/163036/mario-luigi-yoschi-figures-163036.jpeg?auto=compress&cs=tinysrgb&w=800') no-repeat center center/cover;
             height: 100vh;
             position: relative;
             z-index: 1;
@@ -226,22 +213,27 @@
             font-size: 1rem;
             margin-top: 10px;
         }
-        #tiktok-widget {
-            max-width: 800px;
-            margin: 0 auto;
-            border: 3px solid #ffd700;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-        }
         #tiktok-embed {
             max-width: 800px;
             margin: 0 auto;
+            min-height: 472px;
+            background: #2d3748;
+        }
+        #tiktok-widget {
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 600px;
+            background: #2d3748;
         }
         #tiktok-fallback {
             display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #2d3748;
+            padding: 20px;
+            border-radius: 8px;
         }
-        #tiktok-widget:empty + #tiktok-fallback {
+        #tiktok-embed:empty + #tiktok-widget:empty + #tiktok-fallback {
             display: block;
         }
         #discord-widget {
@@ -291,13 +283,12 @@
         .section-header {
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
             animation: glow 2s ease-in-out infinite;
-            /* NEW: Savage icon before headers */
             display: inline-flex;
             align-items: center;
             gap: 10px;
         }
         .section-header::before {
-            content: url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=50&auto=format&fit=crop');
+            content: url('https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&w=50');
             display: inline-block;
             width: 40px;
             height: 40px;
@@ -312,7 +303,6 @@
             border-top: 4px solid #ffd700;
             box-shadow: 0 -4px 10px rgba(255, 215, 0, 0.3);
         }
-        /* NEW: Footer banner image */
         #footer-banner {
             max-width: 800px;
             margin: 0 auto 20px;
@@ -323,9 +313,8 @@
         #footer-banner:hover {
             transform: scale(1.02);
         }
-        /* NEW: Fallback for Discord widget avatars */
         #discord-iframe img {
-            background: url('https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=50&auto=format&fit=crop') no-repeat center center/cover;
+            background: url('https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=50') no-repeat center center/cover;
         }
     </style>
 </head>
@@ -338,9 +327,8 @@
             <rect x="8" y="8" width="2" height="2" fill="#ffd700" />
         </svg>
     </div>
-    <!-- NEW: Sprite with cycling savage images -->
     <div id="sprite">
-        <img src="https://images.unsplash.com/photo-1610563166150-b34df4f3b01d?q=80&w=50&auto=format&fit=crop" alt="Savage gaming sprite" id="sprite-img">
+        <img src="https://images.pexels.com/photos/163036/mario-luigi-yoschi-figures-163036.jpeg?auto=compress&cs=tinysrgb&w=50" alt="Savage gaming sprite" id="sprite-img">
     </div>
     <div id="book-banner" class="fade-in" role="banner">
         <p>Grab <strong>Echo of Silence: Whispers of the Unseen</strong> now! 
@@ -376,22 +364,20 @@
             <p class="text-lg text-gray-400 mb-8 fade-in">Vibe with the community, share #GameVibeHub moments, and catch epic plays live!</p>
             <div id="tiktok-embed" class="fade-in">
                 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@whispers_from_within" data-unique-id="whispers_from_within" data-embed-type="creator" style="max-width: 800px; min-width: 325px;">
-                    <section>
-                        <a target="_blank" href="https://www.tiktok.com/@whispers_from_within">@whispers_from_within</a>
-                    </section>
+                    <section><a target="_blank" href="https://www.tiktok.com/@whispers_from_within">@whispers_from_within</a></section>
                 </blockquote>
-                <script async src="https://www.tiktok.com/embed.js" onerror="console.error('Failed to load TikTok embed script')"></script>
+                <script async src="https://www.tiktok.com/embed.js" onerror="document.getElementById('tiktok-fallback').style.display = 'block';"></script>
             </div>
             <div id="tiktok-widget" class="fade-in">
-                <!-- Tagembed Fallback: Replace YOUR_TAGEMBED_WALL_ID with your Tagembed wall ID from https://tagembed.com -->
-                <script src="https://widget.tagembed.com/embed.min.js" onerror="console.error('Failed to load Tagembed script')"></script>
+                <!-- Register at https://tagembed.com, create a TikTok wall for @whispers_from_within, and replace YOUR_TAGEMBED_WALL_ID -->
+                <script src="https://widget.tagembed.com/embed.min.js" onerror="document.getElementById('tiktok-fallback').style.display = 'block';"></script>
                 <div class="tagembed-container" style="width:100%;height:600px;overflow:auto;">
                     <div class="tagembed-socialwall" data-wall-id="YOUR_TAGEMBED_WALL_ID" data-platform="tiktok" data-source="handle" data-handle="whispers_from_within"></div>
                 </div>
             </div>
-            <div id="tiktok-fallback" class="max-w-2xl mx-auto fade-in">
-                <lottie-player src="https://assets.lottiefiles.com/packages/lf20_kkflmtur.json" background="transparent" speed="1" style="width: 100%; height: 400px;" loop autoplay></lottie-player>
-                <p class="text-gray-400 mt-4">TikTok widget loading... Join <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400">our TikTok</a> for live action!</p>
+            <div id="tiktok-fallback" class="fade-in">
+                <img src="https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=800" alt="TikTok fallback" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px;">
+                <p class="text-gray-400 mt-4">TikTok content loading... Join <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400">our TikTok</a> for live action!</p>
             </div>
             <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mt-6 fade-in">Vibe on TikTok</a>
         </div>
@@ -485,8 +471,7 @@
         <div class="container mx-auto px-4">
             <h3 class="text-2xl font-bold text-yellow-500 mb-4 fade-in">Join the GameVibeHub Community</h3>
             <p class="text-gray-300 mb-6 fade-in">Connect with gamers worldwide, share your victories, and vibe with us on socials! #GameVibeHub</p>
-            <!-- NEW: Savage footer banner -->
-            <img id="footer-banner" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop" alt="Savage gaming crew banner" aria-label="Gaming community banner">
+            <img id="footer-banner" src="https://images.pexels.com/photos/669329/pexels-photo-669329.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Savage gaming crew banner" aria-label="Gaming community banner">
             <div class="flex justify-center space-x-8 mb-6 fade-in">
                 <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
                 <a href="https://discord.gg/your-discord" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Discord"><i class="fab fa-discord fa-2x"></i></a>
@@ -494,7 +479,6 @@
             </div>
             <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Show Discord Server</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
-                <!-- Discord Widget: Ensure widget is enabled in Server Settings > Widget with an Invite Channel set -->
                 <iframe id="discord-iframe" src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';document.getElementById('discord-widget').classList.add('hidden');"></iframe>
             </div>
             <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure widget is enabled and an invite channel is set in Discord settings.</p>
@@ -590,20 +574,61 @@
                 setTimeout(() => trail.remove(), 500);
             });
 
-            // NEW: Cycle savage sprite images
             const spriteImages = [
-                'https://images.unsplash.com/photo-1610563166150-b34df4f3b01d?q=80&w=50&auto=format&fit=crop', // Hearthstone vibe
-                'https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=50&auto=format&fit=crop', // Fortnite vibe
-                'https://images.unsplash.com/photo-1629135504896-6d951e4f6b64?q=80&w=50&auto=format&fit=crop'  // Minecraft vibe
+                'https://images.pexels.com/photos/163036/mario-luigi-yoschi-figures-163036.jpeg?auto=compress&cs=tinysrgb&w=50',
+                'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=50',
+                'https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&w=50'
             ];
+            const fallbackImage = 'https://images.pexels.com/photos/669329/pexels-photo-669329.jpeg?auto=compress&cs=tinysrgb&w=50';
             let spriteIndex = 0;
             function cycleSprite() {
                 spriteImg.src = spriteImages[spriteIndex];
                 spriteImg.alt = `Savage sprite ${spriteIndex + 1}`;
+                spriteImg.onerror = () => {
+                    console.warn(`Failed to load sprite image: ${spriteImg.src}`);
+                    spriteImg.src = fallbackImage;
+                    spriteImg.alt = 'Fallback sprite';
+                };
                 spriteIndex = (spriteIndex + 1) % spriteImages.length;
+                console.log(`Sprite image changed to: ${spriteImg.src}`);
             }
             cycleSprite();
             setInterval(cycleSprite, 5000);
+
+            function moveSprite() {
+                const maxX = window.innerWidth - 60;
+                const maxY = window.innerHeight - 60;
+                let targetX = Math.random() * maxX;
+                let targetY = Math.random() * maxY;
+                const cursorRect = cursor.getBoundingClientRect();
+                const spriteRect = sprite.getBoundingClientRect();
+                const dx = spriteRect.left - cursorRect.left;
+                const dy = spriteRect.top - cursorRect.top;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 150) {
+                    targetX += dx > 0 ? 200 : -200;
+                    targetY += dy > 0 ? 200 : -200;
+                }
+                targetX = Math.max(0, Math.min(targetX, maxX));
+                targetY = Math.max(0, Math.min(targetY, maxY));
+                sprite.style.left = `${targetX}px`;
+                sprite.style.top = `${targetY}px`;
+            }
+            moveSprite();
+            setInterval(moveSprite, 3000);
+
+            function updateCountdown() {
+                const now = new Date();
+                const nextStream = new Date();
+                nextStream.setHours(20, 0, 0, 0); // 8 PM EST
+                if (now > nextStream) nextStream.setDate(nextStream.getDate() + 1);
+                const diff = nextStream - now;
+                const hours = Math.floor(diff / 3600000);
+                const minutes = Math.floor((diff % 3600000) / 60000);
+                document.getElementById('stream-countdown').textContent = `${hours}h ${minutes}m`;
+            }
+            updateCountdown();
+            setInterval(updateCountdown, 60000);
 
             let typed;
             function startTyping() {
@@ -629,15 +654,9 @@
             }
 
             let hasTriggeredTyping = false;
-            function checkSpritePosition() {
-                if (!sprite) {
-                    console.warn('Sprite element not found. Skipping position check.');
-                    return;
-                }
-                const spriteRect = sprite.getBoundingClientRect();
-                const spriteY = spriteRect.top + window.scrollY;
+            function checkVisibility() {
                 const heroElement = document.getElementById('hero');
-                if (!hasTriggeredTyping && heroElement && spriteY > heroElement.getBoundingClientRect().top + window.scrollY) {
+                if (!hasTriggeredTyping && heroElement) {
                     startTyping();
                     hasTriggeredTyping = true;
                 }
@@ -645,21 +664,9 @@
                     section.classList.add('visible');
                     section.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
                 });
-                if (spriteY > document.body.scrollHeight) {
-                    sprite.style.top = '-100px';
-                }
-                const cursorRect = cursor.getBoundingClientRect();
-                const dx = spriteRect.left - cursorRect.left;
-                const dy = spriteRect.top - cursorRect.top;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 100) {
-                    sprite.style.animation = 'floatDown 15s linear infinite, bob 1s ease-in-out infinite, sway 4s ease-in-out infinite';
-                } else {
-                    sprite.style.animation = 'floatDown 15s linear infinite, bob 2s ease-in-out infinite, sway 4s ease-in-out infinite';
-                }
             }
             function animate() {
-                checkSpritePosition();
+                checkVisibility();
                 requestAnimationFrame(animate);
             }
             animate();
@@ -668,7 +675,6 @@
                 console.log(`Forced visibility for: ${el.id || el.tagName}`);
             });
 
-            // Discord Widget Load Check with Enhanced Error Handling
             const discordIframe = document.getElementById('discord-iframe');
             const discordWidget = document.getElementById('discord-widget');
             const discordError = document.getElementById('discord-error');
@@ -680,12 +686,11 @@
                         if (iframeDoc && iframeDoc.body.innerHTML.includes('widget')) {
                             discordWidget.classList.remove('hidden');
                             discordError.style.display = 'none';
-                            // NEW: Monitor for CORS-blocked images
                             const images = iframeDoc.querySelectorAll('img');
                             images.forEach(img => {
                                 img.onerror = () => {
                                     console.warn(`Failed to load Discord avatar: ${img.src}`);
-                                    img.src = 'https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=50&auto=format&fit=crop';
+                                    img.src = 'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=50';
                                     img.alt = 'Fallback avatar';
                                 };
                             });
@@ -699,6 +704,22 @@
                     }
                 });
             }
+
+            const tiktokEmbed = document.getElementById('tiktok-embed');
+            const tiktokWidget = document.getElementById('tiktok-widget');
+            const tiktokFallback = document.getElementById('tiktok-fallback');
+            function checkTikTokLoad() {
+                const iframe = tiktokEmbed.querySelector('iframe');
+                if (iframe && (!iframe.contentDocument || iframe.contentDocument.body.innerHTML === '')) {
+                    console.warn('TikTok iframe is empty');
+                    tiktokFallback.style.display = 'block';
+                }
+                if (tiktokWidget.innerHTML === '') {
+                    console.warn('Tagembed widget is empty');
+                    tiktokFallback.style.display = 'block';
+                }
+            }
+            setTimeout(checkTikTokLoad, 5000);
         });
 
         const grokToggle = document.getElementById('grok-toggle');
@@ -894,7 +915,7 @@
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return generateMemeCaption(text, retryCount + 1);
                     }
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    throw new Error('HTTP error! Status: ${response.status}');
                 }
 
                 const data = await response.json();
@@ -1026,21 +1047,17 @@
         const submitScore = document.getElementById('submit-score');
         const leaderboardList = document.getElementById('leaderboard-list');
         submitScore.addEventListener('click', async () => {
-            console.log('Submit Score clicked');
             const username = document.getElementById('username').value.trim();
             const score = parseInt(document.getElementById('score').value);
-            if (username && score >= 0) {
+            if (username && !isNaN(score)) {
                 try {
                     await push(ref(database, 'leaderboard'), { username, score, timestamp: Date.now() });
                     document.getElementById('username').value = '';
                     document.getElementById('score').value = '';
-                    updateLeaderboard();
                 } catch (error) {
                     console.error('Leaderboard error:', error);
                     leaderboardList.textContent = 'Error submitting score. Try again.';
                 }
-            } else {
-                leaderboardList.textContent = 'Please enter a valid username and score.';
             }
         });
 
@@ -1052,8 +1069,8 @@
                     .sort((a, b) => b.score - a.score)
                     .slice(0, 10);
                 leaderboardList.innerHTML = scores.length
-                    ? scores.map((entry, i) => `<span class="text-yellow-500">${i + 1}.</span> ${entry.username}: ${entry.score}`).join('<br>')
-                    : 'No scores yet! Start climbing!';
+                    ? scores.map((s, i) => `${i + 1}. ${s.username}: ${s.score}`).join('<br>')
+                    : 'No scores yet! Be the first!';
             });
         }
         updateLeaderboard();
@@ -1061,14 +1078,13 @@
         const submitImage = document.getElementById('submit-image');
         const galleryImages = document.getElementById('gallery-images');
         submitImage.addEventListener('click', async () => {
-            const url = document.getElementById('image-url').value.trim();
+            const imageUrl = document.getElementById('image-url').value.trim();
             const caption = document.getElementById('caption').value.trim();
-            if (url && caption) {
+            if (imageUrl && caption) {
                 try {
-                    await push(ref(database, 'gallery'), { url, caption, timestamp: Date.now() });
+                    await push(ref(database, 'gallery'), { imageUrl, caption, timestamp: Date.now() });
                     document.getElementById('image-url').value = '';
                     document.getElementById('caption').value = '';
-                    updateGallery();
                 } catch (error) {
                     console.error('Gallery error:', error);
                     galleryImages.innerHTML = '<p>Error submitting image. Try again.</p>';
@@ -1079,129 +1095,79 @@
         function updateGallery() {
             onValue(ref(database, 'gallery'), (snapshot) => {
                 const data = snapshot.val() || {};
-                const images = Object.values(data);
+                const images = Object.entries(data).map(([id, { imageUrl, caption }]) => ({ id, imageUrl, caption }));
                 galleryImages.innerHTML = images.length
                     ? images.map(img => `
-                        <div class="bg-gray-800 p-3 rounded-lg">
-                            <img src="${img.url}" alt="${img.caption}" class="w-40 h-40 object-cover rounded-lg">
-                            <p class="text-gray-300 text-sm mt-2">${img.caption}</p>
+                        <div class="bg-gray-800 p-4 rounded-lg">
+                            <img src="${img.imageUrl}" alt="${img.caption}" style="max-width: 200px; border-radius: 8px;" onerror="this.src='https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=200'; this.alt='Fallback image';">
+                            <p class="text-gray-300 mt-2">${img.caption}</p>
                         </div>
                     `).join('')
-                    : '<p>No images yet! Share your moments!</p>';
+                    : '<p>No images yet! Share yours!</p>';
             });
         }
         updateGallery();
 
-        const quotes = [
-            "In Hearthstone, every mana crystal is a chance for glory. Play bold!",
-            "Fortnite: Build fast, love slow, win big. #GameVibeHub",
-            "Minecraft: One block at a time, you craft your legend!",
-            "Gaming is our escape, GameVibeHub is our home. Join us!",
-            "Lag tests your skill, victory proves your heart. Keep gaming!"
-        ];
-        const dailyQuote = document.getElementById('daily-quote');
         const newQuote = document.getElementById('new-quote');
-        function displayQuote() {
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            dailyQuote.textContent = `"${randomQuote}"`;
+        const dailyQuote = document.getElementById('daily-quote');
+        const quotes = [
+            "In Hearthstone, mana is life. In life, coffee is mana!",
+            "Fortnite dubs are temporary, but #GameVibeHub vibes are eternal!",
+            "Minecraft: Where every block you place builds a legend!",
+            "A clutch Hearthstone play is worth a thousand V-Bucks!",
+            "Keep calm and craft epic memes with #GameVibeHub!"
+        ];
+        function getRandomQuote() {
+            dailyQuote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
         }
-        newQuote.addEventListener('click', displayQuote);
-        displayQuote();
-
-        const countdownElement = document.getElementById('stream-countdown');
-        function updateCountdown() {
-            const now = new Date();
-            const nextStream = new Date();
-            nextStream.setHours(20, 0, 0, 0);
-            if (now.getHours() >= 20) {
-                nextStream.setDate(now.getDate() + 1);
-            }
-            const timeLeft = nextStream - now;
-            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            countdownElement.textContent = `${hours}h ${minutes}m`;
-        }
-        setInterval(updateCountdown, 60000);
-        updateCountdown();
+        newQuote.addEventListener('click', getRandomQuote);
+        getRandomQuote();
 
         const submitWin = document.getElementById('submit-win');
-        const winError = document.getElementById('win-error');
+        const bigWinCarousel = document.getElementById('big-win-carousel');
         submitWin.addEventListener('click', async () => {
-            console.log('Submit Win clicked');
             const username = document.getElementById('win-username').value.trim();
             const game = document.getElementById('win-game').value;
             const description = document.getElementById('win-description').value.trim();
-            const media = document.getElementById('win-media').value.trim();
-            if (username && description) {
+            const mediaUrl = document.getElementById('win-media').value.trim();
+            if (username && description && mediaUrl) {
                 try {
-                    await push(ref(database, 'bigwins'), {
-                        username,
-                        game,
-                        description,
-                        media,
-                        timestamp: Date.now(),
-                        approved: false
-                    });
+                    await push(ref(database, 'wins'), { username, game, description, mediaUrl, timestamp: Date.now() });
                     document.getElementById('win-username').value = '';
-                    document.getElementById('win-game').value = 'hearthstone';
                     document.getElementById('win-description').value = '';
                     document.getElementById('win-media').value = '';
-                    winError.textContent = 'Win submitted! Awaiting approval.';
-                    winError.classList.remove('hidden', 'error-message');
-                    winError.classList.add('text-green-500');
-                    setTimeout(() => winError.classList.add('hidden'), 3000);
-                    updateBigWins();
                 } catch (error) {
-                    console.error('Big Win error:', error);
-                    winError.textContent = 'Error submitting win. Try again.';
-                    winError.classList.remove('hidden', 'text-green-500');
-                    winError.classList.add('error-message');
+                    console.error('Win submission error:', error);
+                    document.getElementById('win-error').textContent = 'Error submitting win. Try again.';
+                    document.getElementById('win-error').classList.remove('hidden');
                 }
-            } else {
-                winError.textContent = 'Please enter a username and description.';
-                winError.classList.remove('hidden', 'text-green-500');
-                winError.classList.add('error-message');
             }
         });
 
         function updateBigWins() {
-            onValue(ref(database, 'bigwins'), (snapshot) => {
+            onValue(ref(database, 'wins'), (snapshot) => {
                 const data = snapshot.val() || {};
-                const wins = Object.entries(data)
-                    .filter(([_, win]) => win.approved)
-                    .map(([id, { username, game, description, media }]) => ({ id, username, game, description, media }))
-                    .sort((a, b) => b.timestamp - a.timestamp)
-                    .slice(0, 5);
-                const carousel = document.getElementById('big-win-carousel');
-                carousel.innerHTML = wins.length
+                const wins = Object.entries(data).map(([id, { username, game, description, mediaUrl }]) => ({ id, username, game, description, mediaUrl }));
+                bigWinCarousel.innerHTML = wins.length
                     ? wins.map(win => `
                         <div class="big-win-card">
-                            <h3 class="text-xl font-bold text-yellow-500">${win.username}'s ${win.game.charAt(0).toUpperCase() + win.game.slice(1)} Victory</h3>
-                            <p class="text-gray-300 mt-2">${win.description}</p>
-                            ${win.media 
-                                ? (win.media.includes('.mp4') || win.media.includes('.webm') 
-                                    ? `<video src="${win.media}" controls></video>` 
-                                    : `<img src="${win.media}" alt="${win.description}">`)
-                                : `<img src="https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=800&auto=format&fit=crop" alt="Savage victory placeholder">`}
+                            <h3 class="text-xl font-bold text-yellow-500">${win.username}</h3>
+                            <p class="text-gray-300">${win.game.charAt(0).toUpperCase() + win.game.slice(1)}</p>
+                            <p class="text-gray-400">${win.description}</p>
+                            ${win.mediaUrl.includes('.mp4') || win.mediaUrl.includes('.webm')
+                                ? `<video src="${win.mediaUrl}" controls></video>`
+                                : `<img src="${win.mediaUrl}" alt="${win.description}" onerror="this.src='https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=200'; this.alt='Fallback image';">`}
                         </div>
                     `).join('')
-                    : '<p>No epic wins yet! Submit yours to shine!</p>';
-                document.getElementById('view-more-wins').classList.toggle('hidden', wins.length < 5);
+                    : '<p>No epic wins yet! Share yours!</p>';
             });
         }
         updateBigWins();
 
-        document.getElementById('view-more-wins').addEventListener('click', () => {
-            console.log('View More Wins clicked');
-            window.location.href = '#big-win';
-        });
-
         const discordToggle = document.getElementById('discord-toggle');
-        const discordWidget = document.getElementById('discord-widget');
         discordToggle.addEventListener('click', () => {
-            console.log('Discord toggle clicked');
+            const discordWidget = document.getElementById('discord-widget');
             discordWidget.classList.toggle('hidden');
-            discordToggle.textContent = discordWidget.classList.contains('hidden') ? 'Show Discord Server' : 'Hide Discord Server';
         });
     </script>
 </body>
