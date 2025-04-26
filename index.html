@@ -98,7 +98,7 @@
             to { transform: scale(2); opacity: 0; }
         }
         section {
-            opacity: 1; /* Ensure sections are visible by default */
+            opacity: 1;
             transition: opacity 0.8s ease-out, box-shadow 0.8s ease-out;
             position: relative;
         }
@@ -107,7 +107,7 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
         .fade-in {
-            opacity: 1; /* Ensure fade-in elements are visible */
+            opacity: 1;
             transform: translateY(0);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
@@ -208,6 +208,56 @@
             font-size: 0.9rem;
             margin-top: 10px;
         }
+        #tiktok-widget {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #tiktok-fallback {
+            display: none;
+        }
+        #tiktok-widget:empty + #tiktok-fallback {
+            display: block;
+        }
+        #discord-widget {
+            max-width: 400px;
+            margin: 0 auto;
+            transition: opacity 0.3s ease;
+        }
+        #discord-widget.hidden {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+        }
+        #big-win-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+        }
+        .big-win-card {
+            flex: 0 0 300px;
+            background: #2d3748;
+            border: 4px solid #ffd700;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            animation: bigWinPulse 2s ease-in-out infinite;
+            scroll-snap-align: center;
+        }
+        @keyframes bigWinPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .big-win-card img, .big-win-card video {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -256,7 +306,14 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-12 fade-in">Live TikTok Stream</h2>
             <p class="text-xl text-gray-300 mb-6 fade-in">Catch <strong>@whispers_from_within</strong> streaming Hearthstone every evening at 8 PM EST! Next stream in: <span id="stream-countdown">Calculating...</span></p>
-            <div class="max-w-2xl mx-auto fade-in">
+            <div id="tiktok-widget" class="fade-in">
+                <!-- Tagembed TikTok Widget -->
+                <script src="https://widget.tagembed.com/embed.min.js" onerror="console.error('Failed to load Tagembed script')"></script>
+                <div class="tagembed-container" style="width:100%;height:400px;overflow:auto;">
+                    <div class="tagembed-socialwall" data-wall-id="YOUR_TAGEMBED_WALL_ID" data-platform="tiktok" data-source="handle" data-handle="whispers_from_within"></div>
+                </div>
+            </div>
+            <div id="tiktok-fallback" class="max-w-2xl mx-auto fade-in">
                 <lottie-player src="https://assets.lottiefiles.com/packages/lf20_kkflmtur.json" background="transparent" speed="1" style="width: 100%; height: 400px;" loop autoplay></lottie-player>
             </div>
             <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4 fade-in">Join on TikTok</a>
@@ -327,6 +384,26 @@
             <button id="new-quote" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg fade-in">Get New Quote</button>
         </div>
     </section>
+    <section id="big-win" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-12 fade-in">Big Win Game Moments</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Share your epic Hearthstone, Fortnite, or Minecraft victories! #GameVibeHub</p>
+            <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in mb-8">
+                <input id="win-username" type="text" placeholder="Enter your username" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter username">
+                <select id="win-game" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Select game">
+                    <option value="hearthstone">Hearthstone</option>
+                    <option value="fortnite">Fortnite</option>
+                    <option value="minecraft">Minecraft</option>
+                </select>
+                <textarea id="win-description" placeholder="Describe your epic moment (e.g., Clutch Hearthstone play!)" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" rows="4" aria-label="Enter description"></textarea>
+                <input id="win-media" type="text" placeholder="Enter image or video URL" class="bg-gray-800 text-white p-2 rounded mb-4 w-full" aria-label="Enter media URL">
+                <button id="submit-win" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg" aria-label="Submit win">Submit Your Win!</button>
+                <p id="win-error" class="error-message hidden"></p>
+            </div>
+            <div id="big-win-carousel" class="fade-in"></div>
+            <button id="view-more-wins" class="btn inline-block bg-yellow-500 text-gray-900 font-semibold py-2 px-6 rounded-lg mt-4 hidden" aria-label="View more wins">View More</button>
+        </div>
+    </section>
     <footer class="bg-gray-900 py-12 text-center">
         <div class="container mx-auto px-4">
             <p class="text-gray-300 mb-4 fade-in">© 2025 GameVibeHub. All rights reserved.</p>
@@ -334,6 +411,10 @@
                 <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
                 <a href="https://discord.gg/your-discord" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Discord"><i class="fab fa-discord fa-2x"></i></a>
                 <a href="https://twitter.com/ChaseCraft88" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Twitter"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>
+            <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4 fade-in" aria-label="Toggle Discord Widget">Show Discord Community</button>
+            <div id="discord-widget" class="mt-4 fade-in hidden">
+                <iframe src="https://discord.com/widget?id=YOUR_DISCORD_SERVER_ID&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
         </div>
     </footer>
@@ -353,7 +434,6 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Debug: Verify DOM elements
         console.log('DOM Loaded. Checking elements...');
         console.log('Hero:', document.getElementById('hero'));
         console.log('TikTok Stream:', document.getElementById('tiktok-stream'));
@@ -362,9 +442,9 @@
         console.log('Leaderboard:', document.getElementById('leaderboard'));
         console.log('Gallery:', document.getElementById('gallery'));
         console.log('Quote:', document.getElementById('quote'));
+        console.log('Big Win:', document.getElementById('big-win'));
         console.log('Footer:', document.querySelector('footer'));
 
-        // Fetch OpenAI API key
         let OPENAI_API_KEY = '';
         async function loadApiKey() {
             const chatError = document.getElementById('chat-error');
@@ -393,7 +473,6 @@
         }
         await loadApiKey();
 
-        // Particle.js
         particlesJS('particles-js', {
             particles: {
                 number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -412,7 +491,6 @@
             retina_detect: true
         });
 
-        // Animation and Cursor
         document.addEventListener('DOMContentLoaded', () => {
             console.log('DOMContentLoaded fired');
             const cursor = document.getElementById('custom-cursor');
@@ -464,7 +542,7 @@
                     hasTriggeredTyping = true;
                 }
                 document.querySelectorAll('section').forEach(section => {
-                    section.classList.add('visible'); // Force visibility
+                    section.classList.add('visible');
                     section.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
                 });
                 if (spriteY > document.body.scrollHeight) {
@@ -485,14 +563,12 @@
                 requestAnimationFrame(animate);
             }
             animate();
-            // Force initial visibility
             document.querySelectorAll('section, .fade-in').forEach(el => {
                 el.classList.add('visible');
                 console.log(`Forced visibility for: ${el.id || el.tagName}`);
             });
         });
 
-        // AI Chat Logic
         const grokToggle = document.getElementById('grok-toggle');
         const grokPanel = document.getElementById('grok-panel');
         const grokChat = document.getElementById('grok-chat');
@@ -501,7 +577,7 @@
         const roastMe = document.getElementById('roast-me');
         const chatError = document.getElementById('chat-error');
         let lastRequestTime = 0;
-        const COOLDOWN_MS = 5000; // 5s cooldown
+        const COOLDOWN_MS = 5000;
 
         function addChatMessage(message, isUser = false) {
             const div = document.createElement('div');
@@ -564,7 +640,7 @@
 
                 if (!response.ok) {
                     if (response.status === 429 && retryCount < 3) {
-                        const delay = Math.pow(2, retryCount) * 2000; // 2000, 4000, 8000ms
+                        const delay = Math.pow(2, retryCount) * 2000;
                         console.warn(`Rate limit hit. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return sendChatMessage(message, type, retryCount + 1);
@@ -621,7 +697,6 @@
             await sendChatMessage('', 'roast');
         });
 
-        // Meme Generator Logic
         const memeInput = document.getElementById('meme-input');
         const memeTemplate = document.getElementById('meme-template');
         const generateMeme = document.getElementById('generate-meme');
@@ -682,7 +757,7 @@
 
                 if (!response.ok) {
                     if (response.status === 429 && retryCount < 3) {
-                        const delay = Math.pow(2, retryCount) * 2000; // 2000, 4000, 8000ms
+                        const delay = Math.pow(2, retryCount) * 2000;
                         console.warn(`Rate limit hit for caption. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return generateMemeCaption(text, retryCount + 1);
@@ -724,8 +799,8 @@
                             grumpy_cat: '405658',
                             spongebob: '102156234'
                         }[template],
-                        username: 'YOUR_IMGFLIP_USERNAME', // Replace with your Imgflip username
-                        password: 'YOUR_IMGFLIP_PASSWORD', // Replace with your Imgflip password
+                        username: 'YOUR_IMGFLIP_USERNAME',
+                        password: 'YOUR_IMGFLIP_PASSWORD',
                         text0: topText,
                         text1: bottomText
                     })
@@ -783,7 +858,6 @@
 
         drawFallbackMeme('Your Meme Here');
 
-        // Poll Logic
         const pollButtons = document.querySelectorAll('.poll-btn');
         const pollResults = document.getElementById('poll-results');
         pollButtons.forEach(button => {
@@ -817,7 +891,6 @@
         }
         updatePollResults();
 
-        // Leaderboard Logic
         const submitScore = document.getElementById('submit-score');
         const leaderboardList = document.getElementById('leaderboard-list');
         submitScore.addEventListener('click', async () => {
@@ -831,7 +904,7 @@
                     updateLeaderboard();
                 } catch (error) {
                     console.error('Leaderboard error:', error);
-                    leaderboardList.textContent = 'Error submitting score. Try again.';
+                    leaderboard  leaderboardList.textContent = 'Error submitting score. Try again.';
                 }
             }
         });
@@ -850,7 +923,6 @@
         }
         updateLeaderboard();
 
-        // Gallery Logic
         const submitImage = document.getElementById('submit-image');
         const galleryImages = document.getElementById('gallery-images');
         submitImage.addEventListener('click', async () => {
@@ -885,7 +957,6 @@
         }
         updateGallery();
 
-        // Quote Logic
         const quotes = [
             "In Hearthstone, even a Murloc can be a legend. Believe in your deck!",
             "Fortnite dubs are built on sweat and a sturdy build. Keep grinding!",
@@ -902,7 +973,6 @@
         newQuote.addEventListener('click', displayQuote);
         displayQuote();
 
-        // Countdown Logic
         const countdownElement = document.getElementById('stream-countdown');
         function updateCountdown() {
             const now = new Date();
@@ -918,6 +988,81 @@
         }
         setInterval(updateCountdown, 60000);
         updateCountdown();
+
+        const submitWin = document.getElementById('submit-win');
+        const winError = document.getElementById('win-error');
+        submitWin.addEventListener('click', async () => {
+            const username = document.getElementById('win-username').value.trim();
+            const game = document.getElementById('win-game').value;
+            const description = document.getElementById('win-description').value.trim();
+            const media = document.getElementById('win-media').value.trim();
+            if (username && description) {
+                try {
+                    await push(ref(database, 'bigwins'), {
+                        username,
+                        game,
+                        description,
+                        media,
+                        timestamp: Date.now(),
+                        approved: false
+                    });
+                    document.getElementById('win-username').value = '';
+                    document.getElementById('win-game').value = 'hearthstone';
+                    document.getElementById('win-description').value = '';
+                    document.getElementById('win-media').value = '';
+                    winError.textContent = 'Win submitted! Awaiting approval.';
+                    winError.classList.remove('hidden', 'error-message');
+                    winError.classList.add('text-green-500');
+                    setTimeout(() => winError.classList.add('hidden'), 3000);
+                    updateBigWins();
+                } catch (error) {
+                    console.error('Big Win error:', error);
+                    winError.textContent = 'Error submitting win. Try again.';
+                    winError.classList.remove('hidden', 'text-green-500');
+                    winError.classList.add('error-message');
+                }
+            } else {
+                winError.textContent = 'Please enter a username and description.';
+                winError.classList.remove('hidden', 'text-green-500');
+                winError.classList.add('error-message');
+            }
+        });
+
+        function updateBigWins() {
+            onValue(ref(database, 'bigwins'), (snapshot) => {
+                const data = snapshot.val() || {};
+                const wins = Object.entries(data)
+                    .filter(([_, win]) => win.approved)
+                    .map(([id, { username, game, description, media }]) => ({ id, username, game, description, media }))
+                    .sort((a, b) => b.timestamp - a.timestamp)
+                    .slice(0, 5);
+                const carousel = document.getElementById('big-win-carousel');
+                carousel.innerHTML = wins.length
+                    ? wins.map(win => `
+                        <div class="big-win-card">
+                            <h3 class="text-lg font-bold text-yellow-500">${win.username}'s ${win.game.charAt(0).toUpperCase() + win.game.slice(1)} Win</h3>
+                            <p class="text-gray-300 mt-2">${win.description}</p>
+                            ${win.media ? (win.media.includes('.mp4') || win.media.includes('.webm') ? `<video src="${win.media}" controls></video>` : `<img src="${win.media}" alt="${win.description}">`) : ''}
+                        </div>
+                    `).join('')
+                    : '<p>No epic wins yet! Submit yours!</p>';
+                document.getElementById('view-more-wins').classList.toggle('hidden', wins.length < 5);
+            });
+        }
+        updateBigWins();
+
+        document.getElementById('view-more-wins').addEventListener('click', () => {
+            console.log('View More Wins clicked');
+            window.location.href = '#big-win';
+        });
+
+        const discordToggle = document.getElementById('discord-toggle');
+        const discordWidget = document.getElementById('discord-widget');
+        discordToggle.addEventListener('click', () => {
+            console.log('Discord toggle clicked');
+            discordWidget.classList.toggle('hidden');
+            discordToggle.textContent = discordWidget.classList.contains('hidden') ? 'Show Discord Community' : 'Hide Discord Community';
+        });
     </script>
 </body>
 </html>
