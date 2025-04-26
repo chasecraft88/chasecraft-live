@@ -5,12 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameVibeHub - Ultimate Gaming Community</title>
     <meta name="description" content="Join GameVibeHub for epic Hearthstone streams, AI-powered memes, global leaderboards, and community vibes! Live on TikTok @whispers_from_within. #GameVibeHub">
+    <meta name="keywords" content="Hearthstone, Fortnite --
+
+System: I'm sorry, but I can't generate images or directly embed new images into a website without specific URLs or assets provided by you, as I don't have the capability to create or host images. However, I can guide you on how to add "savage" gaming-themed images to the **GameVibeHub** website (`https://chasecraft88.github.io/clasecraft-live/`, artifact ID `f0f3dd0b-cb58-420b-b7ff-29b42419dd2c`) by updating the `index.html` to include placeholders for these images, along with detailed instructions on where to source or create them. I'll ensure the Discord widget (server ID `241248537231228928`), TikTok embed, leaderboard, AI chat, meme generator, and other features remain intact, as per your previous requests.
+
+### Approach for Adding "Savage" Images
+"Savage" images should be bold, edgy, and gaming-themed (Hearthstone, Fortnite, Minecraft) to match the site’s vibrant aesthetic (neon yellow #ffd700, dark #1a202c). They could include intense gaming moments, meme-style graphics, or iconic characters with a rebellious vibe (e.g., a Hearthstone card exploding, a Fortnite character taunting, a Minecraft creeper with a troll face).
+
+#### 1. Image Selection
+- **Type**:
+  - Hearthstone: Legendary card with fiery effects or a clutch play screenshot.
+  - Fortnite: Victory Royale with a savage emote (e.g., "Take the L" dance).
+  - Minecraft: Creeper with a smirk or an explosion scene.
+  - Meme-style: Text overlays like “Get Rekt” or “Savage AF” on gaming scenes.
+- **Source**:
+  - **Free Stock Sites**: Unsplash, Pexels, or Pixabay for gaming-related images (search “gaming,” “esports,” or “neon art”).
+  - **Fan Art**: DeviantArt or ArtStation for Hearthstone/Fortnite/Minecraft fan art (ensure proper attribution or permission).
+  - **Custom Creation**: Use tools like Canva, Photoshop, or AI image generators (e.g., Midjourney, DALL·E) to create custom memes or graphics.
+  - **Placeholders**: I’ll use temporary URLs from Unsplash/Pexels for now; you can replace them with custom assets.
+- **Format**: Use WebP or optimized PNGs (under 200KB) for fast loading.
+- **Accessibility**: Add alt text and aria-labels for screen readers.
+
+#### 2. Placement
+- **Hero Section**:
+  - Add a background image to `.hero-bg` (e.g., a Hearthstone battlefield with glowing cards).
+  - Apply a dark overlay to keep text readable.
+- **Section Headers**:
+  - Add a small savage icon (e.g., a flaming controller) before each `<h2>` using CSS pseudo-elements.
+- **Big Win Carousel**:
+  - Use a default savage placeholder image (e.g., a “Victory Royale” meme) for wins without media.
+- **Sprite Animation**:
+  - Replace the SVG sprite with a cycling set of images (Hearthstone mana crystal, Fortnite llama, Minecraft creeper).
+  - Keep the floating animation and add a glow effect.
+- **Footer**:
+  - Add a banner image above social links (e.g., gaming characters in a savage pose).
+
+#### 3. Implementation
+- **HTML**: Add `<img>` tags or CSS background images with placeholder URLs.
+- **CSS**: Style images with glow effects, hover animations, and responsive sizing.
+- **JavaScript**: Cycle sprite images every 5 seconds; preserve existing animations (Particle.js, Typed.js, cursor trails).
+- **Preserve Features**:
+  - Discord widget with server ID `241248537231228928`.
+  - TikTok embed for `@whispers_from_within`.
+  - Leaderboard, AI chat (5s cooldown), meme generator, poll, gallery, quote, countdown.
+  - Firebase integration (`/bigwins`, `/leaderboard`, `/gallery`).
+- **Artifact**: Update `f0f3dd0b-cb58-420b-b7ff-29b42419dd2c` with a new version ID.
+
+### Updated `index.html`
+The updated artifact includes placeholder images, new styles, and JavaScript for cycling sprites. Changes are commented for clarity.
+
+<xaiArtifact artifact_id="f0f3dd0b-cb58-420b-b7ff-29b42419dd2c" artifact_version_id="91b05414-3568-471e-a74f-77de97e6acad" title="index.html" contentType="text/html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVibeHub - Ultimate Gaming Community</title>
+    <meta name="description" content="Join GameVibeHub for epic Hearthstone streams, AI-powered memes, global leaderboards, and community vibes! Live on TikTok @whispers_from_within. #GameVibeHub">
     <meta name="keywords" content="Hearthstone, Fortnite, Minecraft, TikTok, gaming, AI memes, Discord, GameVibeHub">
     <meta name="author" content="ChaseCraft88">
     <meta property="og:title" content="GameVibeHub - Ultimate Gaming Community">
     <meta property="og:description" content="Dive into the ultimate gaming hub for streams, memes, and epic community fun!">
-    <meta property="og:image" content="https://chasecraft88.github.io/chasecraft-live/og-image.jpg">
-    <meta property="og:url" content="https://chasecraft88.github.io/chasecraft-live/">
+    <meta property="og:image" content="https://chasecraft88.github.io/clasecraft-live/og-image.jpg">
+    <meta property="og:url" content="https://chasecraft88.github.io/clasecraft-live/">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet" onerror="console.error('Failed to load Tailwind CSS')">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" onerror="console.error('Failed to load Font Awesome')">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -64,6 +121,15 @@
             z-index: 10;
             animation: floatDown 15s linear infinite, bob 2s ease-in-out infinite, sway 4s ease-in-out infinite;
             pointer-events: none;
+            width: 60px;
+            height: 60px;
+        }
+        #sprite img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+            animation: pulse 1.5s ease-in-out infinite;
         }
         @keyframes floatDown {
             0% { top: -100px; }
@@ -76,10 +142,6 @@
         @keyframes sway {
             0%, 100% { transform: translate(-50%, 0); }
             50% { transform: translate(-60%, 0); }
-        }
-        #sprite svg {
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-            animation: pulse 1.5s ease-in-out infinite;
         }
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
@@ -129,7 +191,8 @@
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
         .hero-bg {
-            background: linear-gradient(180deg, #4b0082, #1a202c);
+            /* NEW: Savage background image with overlay */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1610563166150-b34df4f3b01d?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
             height: 100vh;
             position: relative;
             z-index: 1;
@@ -283,6 +346,17 @@
         .section-header {
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
             animation: glow 2s ease-in-out infinite;
+            /* NEW: Savage icon before headers */
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-header::before {
+            content: url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=50&auto=format&fit=crop');
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
         }
         @keyframes glow {
             0%, 100% { text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
@@ -292,6 +366,17 @@
             background: #1a202c;
             border-top: 4px solid #ffd700;
             box-shadow: 0 -4px 10px rgba(255, 215, 0, 0.3);
+        }
+        /* NEW: Footer banner image */
+        #footer-banner {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        #footer-banner:hover {
+            transform: scale(1.02);
         }
     </style>
 </head>
@@ -304,13 +389,9 @@
             <rect x="8" y="8" width="2" height="2" fill="#ffd700" />
         </svg>
     </div>
+    <!-- NEW: Sprite with cycling savage images -->
     <div id="sprite">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="8" y="8" width="24" height="24" fill="#ffd700" />
-            <rect x="12" y="12" width="16" height="16" fill="#ffffff" />
-            <rect x="16" y="16" width="4" height="4" fill="#ffd700" />
-            <rect x="24" y="16" width="4" height="4" fill="#ffd700" />
-        </svg>
+        <img src="https://images.unsplash.com/photo-1610563166150-b34df4f3b01d?q=80&w=50&auto=format&fit=crop" alt="Savage gaming sprite" id="sprite-img">
     </div>
     <div id="book-banner" class="fade-in" role="banner">
         <p>Grab <strong>Echo of Silence: Whispers of the Unseen</strong> now! 
@@ -456,6 +537,8 @@
         <div class="container mx-auto px-4">
             <h3 class="text-2xl font-bold text-yellow-500 mb-4 fade-in">Join the GameVibeHub Community</h3>
             <p class="text-gray-300 mb-6 fade-in">Connect with gamers worldwide, share your victories, and vibe with us on socials! #GameVibeHub</p>
+            <!-- NEW: Savage footer banner -->
+            <img id="footer-banner" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop" alt="Savage gaming crew banner" aria-label="Gaming community banner">
             <div class="flex justify-center space-x-8 mb-6 fade-in">
                 <a href="https://www.tiktok.com/@whispers_from_within" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
                 <a href="https://discord.gg/your-discord" target="_blank" class="text-yellow-500 hover:text-yellow-400" aria-label="Discord"><i class="fab fa-discord fa-2x"></i></a>
@@ -463,8 +546,7 @@
             </div>
             <button id="discord-toggle" class="btn inline-block bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg mb-6 fade-in" aria-label="Toggle Discord Widget">Show Discord Server</button>
             <div id="discord-widget" class="mt-4 fade-in hidden">
-                <!-- Discord Widget: Ensure widget is enabled in Server Settings > Widget with an Invite Channel set.
-                     The widget will show server name, online members, and a "Connect" button if configured correctly. -->
+                <!-- Discord Widget: Ensure widget is enabled in Server Settings > Widget with an Invite Channel set. -->
                 <iframe id="discord-iframe" src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" onerror="document.getElementById('discord-error').style.display='block';document.getElementById('discord-widget').classList.add('hidden');"></iframe>
             </div>
             <p id="discord-error" class="error-message">Failed to load Discord widget. Ensure widget is enabled and an invite channel is set in Discord settings.</p>
@@ -548,6 +630,7 @@
             console.log('DOMContentLoaded fired');
             const cursor = document.getElementById('custom-cursor');
             const sprite = document.getElementById('sprite');
+            const spriteImg = document.getElementById('sprite-img');
             document.addEventListener('mousemove', (e) => {
                 cursor.style.left = `${e.clientX}px`;
                 cursor.style.top = `${e.clientY}px`;
@@ -558,6 +641,21 @@
                 document.body.appendChild(trail);
                 setTimeout(() => trail.remove(), 500);
             });
+
+            // NEW: Cycle savage sprite images
+            const spriteImages = [
+                'https://images.unsplash.com/photo-1610563166150-b34df4f3b01d?q=80&w=50&auto=format&fit=crop', // Hearthstone vibe
+                'https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=50&auto=format&fit=crop', // Fortnite vibe
+                'https://images.unsplash.com/photo-1629135504896-6d951e4f6b64?q=80&w=50&auto=format&fit=crop'  // Minecraft vibe
+            ];
+            let spriteIndex = 0;
+            function cycleSprite() {
+                spriteImg.src = spriteImages[spriteIndex];
+                spriteImg.alt = `Savage sprite ${spriteIndex + 1}`;
+                spriteIndex = (spriteIndex + 1) % spriteImages.length;
+            }
+            cycleSprite();
+            setInterval(cycleSprite, 5000);
 
             let typed;
             function startTyping() {
@@ -1123,7 +1221,11 @@
                         <div class="big-win-card">
                             <h3 class="text-xl font-bold text-yellow-500">${win.username}'s ${win.game.charAt(0).toUpperCase() + win.game.slice(1)} Victory</h3>
                             <p class="text-gray-300 mt-2">${win.description}</p>
-                            ${win.media ? (win.media.includes('.mp4') || win.media.includes('.webm') ? `<video src="${win.media}" controls></video>` : `<img src="${win.media}" alt="${win.description}">`) : ''}
+                            ${win.media 
+                                ? (win.media.includes('.mp4') || win.media.includes('.webm') 
+                                    ? `<video src="${win.media}" controls></video>` 
+                                    : `<img src="${win.media}" alt="${win.description}">`)
+                                : `<img src="https://images.unsplash.com/photo-1593305841991-2b06a80a7095?q=80&w=800&auto=format&fit=crop" alt="Savage victory placeholder">`}
                         </div>
                     `).join('')
                     : '<p>No epic wins yet! Submit yours to shine!</p>';
