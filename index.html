@@ -366,11 +366,11 @@
                 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@whispers_from_within" data-unique-id="whispers_from_within" data-embed-type="creator" style="max-width: 800px; min-width: 325px;">
                     <section><a target="_blank" href="https://www.tiktok.com/@whispers_from_within">@whispers_from_within</a></section>
                 </blockquote>
-                <script async src="https://www.tiktok.com/embed.js" onerror="document.getElementById('tiktok-fallback').style.display = 'block';"></script>
+                <script async src="https://www.tiktok.com/embed.js" onerror="console.error('TikTok embed failed'); document.getElementById('tiktok-fallback').style.display = 'block';"></script>
             </div>
             <div id="tiktok-widget" class="fade-in">
-                <!-- Register at https://tagembed.com, create a TikTok wall for @whispers_from_within, and replace YOUR_TAGEMBED_WALL_ID -->
-                <script src="https://widget.tagembed.com/embed.min.js" onerror="document.getElementById('tiktok-fallback').style.display = 'block';"></script>
+                <!-- Register at https://tagembed.com, create a TikTok wall for @whispers_from_within, get your data-wall-id, and replace YOUR_TAGEMBED_WALL_ID -->
+                <script src="https://widget.tagembed.com/embed.min.js" onerror="console.error('Tagembed failed'); document.getElementById('tiktok-fallback').style.display = 'block';"></script>
                 <div class="tagembed-container" style="width:100%;height:600px;overflow:auto;">
                     <div class="tagembed-socialwall" data-wall-id="YOUR_TAGEMBED_WALL_ID" data-platform="tiktok" data-source="handle" data-handle="whispers_from_within"></div>
                 </div>
@@ -579,7 +579,7 @@
                 'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=50',
                 'https://images.pexels.com/photos/373076/pexels-photo-373076.jpeg?auto=compress&cs=tinysrgb&w=50'
             ];
-            const fallbackImage = 'https://images.pexels.com/photos/669329/pexels-photo-669329.jpeg?auto=compress&cs=tinysrgb&w=50';
+            const fallbackImage = 'https://via.placeholder.com/50/ffd700/ffffff?text=Sprite';
             let spriteIndex = 0;
             function cycleSprite() {
                 spriteImg.src = spriteImages[spriteIndex];
@@ -602,17 +602,16 @@
                 let targetY = Math.random() * maxY;
                 const cursorRect = cursor.getBoundingClientRect();
                 const spriteRect = sprite.getBoundingClientRect();
-                const dx = spriteRect.left - cursorRect.left;
-                const dy = spriteRect.top - cursorRect.top;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < 150) {
-                    targetX += dx > 0 ? 200 : -200;
-                    targetY += dy > 0 ? 200 : -200;
+                const distance = Math.hypot(spriteRect.left - cursorRect.left, spriteRect.top - cursorRect.top);
+                if (distance < 100) {
+                    targetX += (spriteRect.left - cursorRect.left) > 0 ? 150 : -150;
+                    targetY += (spriteRect.top - cursorRect.top) > 0 ? 150 : -150;
                 }
                 targetX = Math.max(0, Math.min(targetX, maxX));
                 targetY = Math.max(0, Math.min(targetY, maxY));
                 sprite.style.left = `${targetX}px`;
                 sprite.style.top = `${targetY}px`;
+                console.log(`Sprite moved to: (${targetX}, ${targetY})`);
             }
             moveSprite();
             setInterval(moveSprite, 3000);
@@ -710,16 +709,16 @@
             const tiktokFallback = document.getElementById('tiktok-fallback');
             function checkTikTokLoad() {
                 const iframe = tiktokEmbed.querySelector('iframe');
-                if (iframe && (!iframe.contentDocument || iframe.contentDocument.body.innerHTML === '')) {
-                    console.warn('TikTok iframe is empty');
+                const isEmbedEmpty = !iframe || !iframe.contentDocument || iframe.contentDocument.body.innerHTML === '';
+                const isWidgetEmpty = tiktokWidget.innerHTML === '' || !tiktokWidget.querySelector('.tagembed-socialwall').hasChildNodes();
+                if (isEmbedEmpty && isWidgetEmpty) {
+                    console.warn('Both TikTok embed and widget are empty. Showing fallback.');
                     tiktokFallback.style.display = 'block';
-                }
-                if (tiktokWidget.innerHTML === '') {
-                    console.warn('Tagembed widget is empty');
-                    tiktokFallback.style.display = 'block';
+                } else {
+                    console.log('TikTok content loaded:', { embed: !isEmbedEmpty, widget: !isWidgetEmpty });
                 }
             }
-            setTimeout(checkTikTokLoad, 5000);
+            setTimeout(checkTikTokLoad, 3000);
         });
 
         const grokToggle = document.getElementById('grok-toggle');
@@ -793,7 +792,7 @@
 
                 if (!response.ok) {
                     if (response.status === 429 && retryCount < 3) {
-                        const delay = Math.pow(2, retryCount) * 2000;
+                        const delay = Math.pow(2, retryCount) * 4000;
                         console.warn(`Rate limit hit. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return sendChatMessage(message, type, retryCount + 1);
@@ -910,12 +909,12 @@
 
                 if (!response.ok) {
                     if (response.status === 429 && retryCount < 3) {
-                        const delay = Math.pow(2, retryCount) * 2000;
+                        const delay = Math.pow(2, retryCount) * 4000;
                         console.warn(`Rate limit hit for caption. Retrying in ${delay}ms...`);
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return generateMemeCaption(text, retryCount + 1);
                     }
-                    throw new Error('HTTP error! Status: ${response.status}');
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
@@ -952,8 +951,8 @@
                             grumpy_cat: '405658',
                             spongebob: '102156234'
                         }[template],
-                        username: 'YOUR_IMGFLIP_USERNAME',
-                        password: 'YOUR_IMGFLIP_PASSWORD',
+                        username: 'YOUR_IMGFLIP_USERNAME', // Sign up at https://imgflip.com, get your username, and replace this
+                        password: 'YOUR_IMGFLIP_PASSWORD', // Replace with your Imgflip password
                         text0: topText,
                         text1: bottomText
                     })
@@ -982,14 +981,14 @@
                 }
             } catch (error) {
                 if (error.message.includes('429') && retryCount < 3) {
-                    const delay = Math.pow(2, retryCount) * 2000;
+                    const delay = Math.pow(2, retryCount) * 4000;
                     console.warn(`Rate limit hit for Imgflip. Retrying in ${delay}ms...`);
                     await new Promise(resolve => setTimeout(resolve, delay));
                     return generateMemes(text, template, retryCount + 1);
                 }
                 drawFallbackMeme(caption);
                 memePreviews.innerHTML = '<p>Failed to generate meme. Using fallback.</p>';
-                memeError.textContent = `Meme error: ${error.message}`;
+                memeError.textContent = `Meme error: ${error.message}. Sign up at https://imgflip.com for credentials.`;
                 memeError.classList.remove('hidden');
                 console.error('Meme error:', error);
             }
