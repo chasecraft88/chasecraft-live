@@ -7,17 +7,14 @@
     <meta name="description" content="Join GameVibeHub for Hearthstone streams, AI memes, global leaderboards, and Grok’s epic banter! Catch daily TikTok streams! #GameVibeHub">
     <meta name="keywords" content="Discord, Hearthstone, Magic: The Gathering, World of Warcraft, gaming, streaming, TikTok, AI memes, Grok">
     <meta name="author" content="ChaseCraft88">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS (Precompiled from CDN for simplicity) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Typed.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <!-- Firebase CDN -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -516,7 +513,8 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold mb-12 fade-in">Join the Global Hub</h2>
             <p class="text-xl text-gray-300 mb-6 fade-in">Connect with gamers worldwide!</p>
-            <iframe src="https://discord.com/widget?id=241248537231228928&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" class="mx-auto fade-in"></iframe>
+            <a href="https://discord.gg/YOUR_INVITE_LINK" target="_blank" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Join Discord</a>
+            <p class="text-gray-400 mt-4">Due to CORS issues, the Discord widget is disabled. Click above to join!</p>
         </div>
     </section>
 
@@ -542,8 +540,11 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
-    <script>
+    <!-- Firebase CDN (as modules) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getDatabase, ref, push, onValue, orderByChild, limitToLast } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js';
+
         // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyB0QZQgiVJMmu0Dx91q5uYPsEEpWSDytoA",
@@ -554,11 +555,14 @@
             messagingSenderId: "743860292247",
             appId: "1:743860292247:web:63ca1a68cc6b480354b7d2"
         };
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
         // StableDiffusionAPI Key (Replace with your key)
         const stableDiffusionApiKey = 'YOUR_STABLE_DIFFUSION_API_KEY';
+
+        // Debug log
+        console.log('Firebase initialized');
 
         // Custom Cursor
         const cursor = document.getElementById('custom-cursor');
@@ -756,10 +760,10 @@
                     alert('You can only submit one score per session! Refresh to play again.');
                     return;
                 }
-                database.ref('leaderboard').push({
+                push(ref(database, 'leaderboard'), {
                     username: username,
                     score: score,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                    timestamp: Date.now()
                 }).then(() => {
                     localStorage.setItem('hasSubmitted', 'true');
                     usernameInput.value = '';
@@ -775,7 +779,7 @@
             }
         });
 
-        database.ref('leaderboard').orderByChild('score').limitToLast(5).on('value', (snapshot) => {
+        onValue(ref(database, 'leaderboard'), (snapshot) => {
             leaderboardList.innerHTML = '';
             const scores = [];
             snapshot.forEach(child => {
@@ -850,11 +854,11 @@
             }
 
             const prompts = [
-                'Cyberpunk Hearthstone card battle, glowing mana crystals',
-                'Warframe Tenno in neon sci-fi armor, dynamic pose',
-                'Magic: The Gathering spellcasting, arcane explosion',
-                'Fortnite Victory Royale with vibrant dance emotes',
-                'Minecraft epic build, glowing redstone circuits'
+                'Cyberpunk Hearthstone card battle, glowing mana crystals, comic book art, vibrant sketch',
+                'Warframe Tenno in neon sci-fi armor, dynamic pose, simple background',
+                'Magic: The Gathering spellcasting, arcane explosion, rough colored sketch',
+                'Fortnite Victory Royale with vibrant dance emotes, white background',
+                'Minecraft epic build, glowing redstone circuits, comic book style'
             ];
             const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
 
@@ -864,13 +868,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         key: stableDiffusionApiKey,
-                        prompt: randomPrompt,
+                        prompt: `${randomPrompt}, ${text}`,
                         negative_prompt: 'blurry, low quality',
                         width: '300',
                         height: '200',
                         samples: '1',
                         num_inference_steps: '20',
-                        guidance_scale: 7.5
+                        guidance_scale: 7.5,
+                        safety_checker: true,
+                        base64: false
                     })
                 });
                 const data = await response.json();
