@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameVibeHub - The Ultimate Gaming Hub!</title>
-    <meta name="description" content="Join GameVibeHub for Hearthstone streams, global gaming challenges, and epic community vibes! Catch daily TikTok streams and share your Gamer Card! #GameVibeHub">
-    <meta name="keywords" content="Discord, Hearthstone, Magic: The Gathering, World of Warcraft, gaming, streaming, TikTok, community">
-    <meta name="author" content="YourName">
+    <meta name="description" content="Join GameVibeHub for Hearthstone streams, AI memes, global leaderboards, and Grok’s epic banter! Catch daily TikTok streams! #GameVibeHub">
+    <meta name="keywords" content="Discord, Hearthstone, Magic: The Gathering, World of Warcraft, gaming, streaming, TikTok, AI memes, Grok">
+    <meta name="author" content="ChaseCraft88">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome CDN -->
@@ -190,6 +190,44 @@
             text-align: center;
             width: 90%;
         }
+        #grok-panel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #1a202c;
+            border-left: 4px solid #ffd700;
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+        #grok-panel.open {
+            right: 0;
+        }
+        #grok-panel .chat-area {
+            padding: 20px;
+            color: #e2e8f0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+        }
+        #grok-panel .chat-message {
+            background: #2d3748;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInChat 0.5s ease forwards;
+        }
+        @keyframes fadeInChat {
+            to { opacity: 1; }
+        }
+        #grok-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
     </style>
 </head>
 <body>
@@ -212,6 +250,16 @@
         </svg>
     </div>
 
+    <!-- Grok Side Panel -->
+    <button id="grok-toggle" class="btn bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg">Chat with Grok</button>
+    <div id="grok-panel">
+        <div class="chat-area">
+            <h3 class="text-xl font-bold mb-4 text-yellow-500">Grok’s GameVibe Banter</h3>
+            <div id="grok-chat"></div>
+            <button id="grok-more" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">More Vibe</button>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section id="hero" class="hero-bg flex items-center justify-center text-center">
         <div class="bg-black bg-opacity-50 p-10 rounded-lg fade-in">
@@ -230,7 +278,6 @@
             <div class="bg-gray-800 p-6 rounded-lg max-w-md mx-auto fade-in">
                 <p id="daily-challenge-text" class="text-2xl text-white mb-4"></p>
                 <a href="https://twitter.com/intent/tweet?text=I’m tackling today’s GameVibeHub challenge: [Challenge]! Join me! https://discord.gg/YOUR_INVITE_LINK #GameVibeHub" target="_blank" class="btn inline-block bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg">Share on Twitter</a>
-            </div>
         </div>
     </section>
 
@@ -290,16 +337,13 @@
     <!-- Meme Generator Section -->
     <section id="meme" class="py-20 bg-gray-900">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-12 fade-in">Game Meme Generator</h2>
-            <p class="text-xl text-gray-300 mb-6 fade-in">Create a meme and go viral with #GameVibeHub!</p>
+            <h2 class="text-4xl font-bold mb-12 fade-in">AI-Powered Meme Generator</h2>
+            <p class="text-xl text-gray-300 mb-6 fade-in">Create epic gaming memes with AI and go viral with #GameVibeHub!</p>
             <div class="bg-gray-900 p-6 rounded-lg max-w-md mx-auto fade-in">
                 <input id="meme-input" type="text" placeholder="Enter your meme text..." class="bg-gray-800 text-white p-2 rounded mb-4 w-full">
+                <button id="generate-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mb-4">Generate AI Meme</button>
                 <div id="meme-canvas" class="mx-auto">
-                    <svg width="300" height="200" viewBox="0 0 300 200" fill="none">
-                        <rect width="300" height="200" fill="#ffd700" />
-                        <rect x="10" y="10" width="280" height="180" fill="#ffffff" />
-                        <rect x="120" y="80" width="60" height="40" fill="#ffd700" />
-                    </svg>
+                    <canvas id="meme-image" width="300" height="200"></canvas>
                     <div id="meme-text"></div>
                 </div>
                 <button id="download-meme" class="btn inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg mt-4">Download Meme</button>
@@ -318,14 +362,14 @@
                     <p class="text-gray-300">Watch *Hearthstone* duels or *CoD* battles live on TikTok. Join the hype!</p>
                 </div>
                 <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
-                    <i class="fas fa-music text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-semibold mb-2">Vibe Remixes</h3>
-                    <p class="text-gray-300">Chat *Magic* combos or remix beats. Mana up for global music vibes!</p>
+                    <i class="fas fa-robot text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Grok’s Banter</h3>
+                    <p class="text-gray-300">Chat with Grok for epic gaming vibes and witty one-liners!</p>
                 </div>
                 <div class="p-6 bg-gray-800 rounded-lg feature-card fade-in">
-                    <i class="fas fa-users text-4xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-semibold mb-2">Worldwide Events</h3>
-                    <p class="text-gray-300">Join *Poker* nights, *Warframe* raids, or *Minecraft* builds. Unite gamers!</p>
+                    <i class="fas fa-image text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">AI Memes</h3>
+                    <p class="text-gray-300">Generate viral gaming memes with AI and share with #GameVibeHub!</p>
                 </div>
             </div>
         </div>
@@ -480,8 +524,11 @@
     <footer class="py-10 bg-gray-800 text-center">
         <div class="container mx-auto px-4">
             <p class="text-gray-400 mb-4 fade-in">© 2025 GameVibeHub. All rights reserved.</p>
-            <p class="text-gray-400 mb-4 fade-in">Powered by mana crystals and global vibes!</p>
+            <p class="text-gray-400 mb-4 fade-in">Powered by mana crystals, AI, and Grok’s vibes!</p>
             <div class="flex justify-center space-x-6">
+                <a href="https://github.com/chasecraft88/chasecraft-live" target="_blank" class="text-gray-300 hover:text-yellow-500 fade-in">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
                 <a href="https://twitter.com/YOUR_TWITTER" target="_blank" class="text-gray-300 hover:text-yellow-500 fade-in">
                     <i class="fab fa-twitter text-2xl"></i>
                 </a>
@@ -510,6 +557,9 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // StableDiffusionAPI Key (Replace with your key)
+        const stableDiffusionApiKey = 'YOUR_STABLE_DIFFUSION_API_KEY';
+
         // Custom Cursor
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
@@ -535,9 +585,9 @@
                     'Build epic *Minecraft* creations!',
                     'Drop *Fortnite* dubs with us!',
                     'Share your *Warframe* builds!',
-                    'Create a meme and go viral!',
-                    'Join daily global challenges!',
-                    'What’s your vibe? Share it!'
+                    'Create AI memes and go viral!',
+                    'Chat with Grok for epic vibes!',
+                    'Join daily global challenges!'
                 ],
                 typeSpeed: 50,
                 backSpeed: 30,
@@ -588,6 +638,54 @@
             requestAnimationFrame(animate);
         }
         animate();
+
+        // Grok Side Panel
+        const grokToggle = document.getElementById('grok-toggle');
+        const grokPanel = document.getElementById('grok-panel');
+        const grokChat = document.getElementById('grok-chat');
+        const grokMore = document.getElementById('grok-more');
+        const grokBanter = [
+            'Dropped a 10-mana Hearthstone combo yet, or you still stuck in Novice rank?',
+            'Yo, your Warframe build got more glow than a Tenno’s fashion frame!',
+            'Magic: The Gathering? More like Mana: The Gathering with those combos!',
+            'Bet you can’t bluff me in Poker. I’ve got an AI poker face!',
+            'Minecraft masterpiece or dirt hut? Show me your build vibes!',
+            'Fortnite Victory Royale incoming, or you droppin’ in Tilted Towers again?',
+            'Diablo boss down? Share that loot or Grok’s gonna steal it!',
+            'Your Hearthstone deck is so wild, it’s got its own Battlegrounds!',
+            'Warframe raid time! You bringing Volt or just shocking vibes?',
+            'Magic deck so spicy, it’s casting Fireball on my circuits!',
+            'Scrabble champ? Spell “GameVibeHub” for bonus points!',
+            'World of Warcraft raid leader or just farming herbs? Spill the tea!',
+            'Call of Duty headshot streak or camping in a corner? Be honest!',
+            'Grok’s got 99 mana crystals, but your vibe ain’t one!',
+            'Spin that wheel like it’s a Hearthstone card draw!',
+            'Your meme’s so viral, it’s trending on TikTok already!',
+            'GameVibeHub’s leaderboard? Time to slam some scores!',
+            'Poker night? I’m all in with a royal flush of vibes!',
+            'Minecraft redstone pro or still blowing up your base?',
+            'Grok’s AI says: Keep gaming, keep vibing!'
+        ];
+
+        function addGrokMessage(message) {
+            const div = document.createElement('div');
+            div.className = 'chat-message';
+            div.textContent = message;
+            grokChat.appendChild(div);
+            grokChat.scrollTop = grokChat.scrollHeight;
+        }
+
+        grokToggle.addEventListener('click', () => {
+            grokPanel.classList.toggle('open');
+            if (grokPanel.classList.contains('open') && grokChat.children.length === 0) {
+                addGrokMessage('Yo, what’s the vibe? Ready for some GameVibeHub chaos?');
+            }
+        });
+
+        grokMore.addEventListener('click', () => {
+            const randomBanter = grokBanter[Math.floor(Math.random() * grokBanter.length)];
+            addGrokMessage(randomBanter);
+        });
 
         // TikTok Stream Countdown
         const countdownElement = document.getElementById('stream-countdown');
@@ -711,18 +809,15 @@
         vibeSelect.addEventListener('change', updateGamerCard);
         updateGamerCard();
 
-        // Meme Generator
+        // AI Meme Generator
         const memeInput = document.getElementById('meme-input');
         const memeText = document.getElementById('meme-text');
+        const generateMeme = document.getElementById('generate-meme');
+        const memeCanvas = document.getElementById('meme-image');
         const downloadMeme = document.getElementById('download-meme');
-        memeInput.addEventListener('input', () => {
-            memeText.textContent = memeInput.value || 'Enter your meme text...';
-        });
-        downloadMeme.addEventListener('click', () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 300;
-            canvas.height = 200;
-            const ctx = canvas.getContext('2d');
+        const ctx = memeCanvas.getContext('2d');
+
+        function drawFallbackMeme(text) {
             ctx.fillStyle = '#ffd700';
             ctx.fillRect(0, 0, 300, 200);
             ctx.fillStyle = '#ffffff';
@@ -736,16 +831,86 @@
             ctx.shadowColor = '#000000';
             ctx.shadowOffsetX = 2;
             ctx.shadowOffsetY = 2;
-            const text = memeInput.value || 'Your Meme Here';
             const lines = text.match(/.{1,20}(\s|$)/g) || [text];
             lines.forEach((line, i) => {
                 ctx.fillText(line.trim(), 150, 100 + i * 20);
             });
+        }
+
+        memeInput.addEventListener('input', () => {
+            memeText.textContent = memeInput.value || 'Enter your meme text...';
+        });
+
+        generateMeme.addEventListener('click', async () => {
+            const text = memeInput.value || 'Your Meme Here';
+            if (!stableDiffusionApiKey || stableDiffusionApiKey === 'YOUR_STABLE_DIFFUSION_API_KEY') {
+                drawFallbackMeme(text);
+                alert('No Stable Diffusion API key provided. Using fallback meme.');
+                return;
+            }
+
+            const prompts = [
+                'Cyberpunk Hearthstone card battle, glowing mana crystals',
+                'Warframe Tenno in neon sci-fi armor, dynamic pose',
+                'Magic: The Gathering spellcasting, arcane explosion',
+                'Fortnite Victory Royale with vibrant dance emotes',
+                'Minecraft epic build, glowing redstone circuits'
+            ];
+            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+
+            try {
+                const response = await fetch('https://stablediffusionapi.com/api/v3/text2img', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        key: stableDiffusionApiKey,
+                        prompt: randomPrompt,
+                        negative_prompt: 'blurry, low quality',
+                        width: '300',
+                        height: '200',
+                        samples: '1',
+                        num_inference_steps: '20',
+                        guidance_scale: 7.5
+                    })
+                });
+                const data = await response.json();
+                if (data.status === 'success' && data.output && data.output[0]) {
+                    const img = new Image();
+                    img.crossOrigin = 'Anonymous';
+                    img.onload = () => {
+                        ctx.drawImage(img, 0, 0, 300, 200);
+                        ctx.fillStyle = '#ffffff';
+                        ctx.font = '16px Press Start 2P';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.shadowColor = '#000000';
+                        ctx.shadowOffsetX = 2;
+                        ctx.shadowOffsetY = 2;
+                        const lines = text.match(/.{1,20}(\s|$)/g) || [text];
+                        lines.forEach((line, i) => {
+                            ctx.fillText(line.trim(), 150, 100 + i * 20);
+                        });
+                    };
+                    img.src = data.output[0];
+                } else {
+                    drawFallbackMeme(text);
+                    alert('Failed to generate AI meme. Using fallback.');
+                }
+            } catch (error) {
+                drawFallbackMeme(text);
+                alert('Error generating AI meme: ' + error.message);
+            }
+        });
+
+        downloadMeme.addEventListener('click', () => {
             const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
+            link.href = memeCanvas.toDataURL('image/png');
             link.download = 'gamevibehub-meme.png';
             link.click();
         });
+
+        // Initialize meme canvas with fallback
+        drawFallbackMeme('Your Meme Here');
 
         // Spin the Wheel
         const wheelButton = document.getElementById('spin-wheel');
@@ -783,6 +948,7 @@
                         section.classList.add('rainbow-border');
                         section.style.border = '4px solid';
                     });
+                    addGrokMessage('Konami Code activated! Rainbow vibes unlocked!');
                     konamiIndex = 0;
                 }
             } else {
